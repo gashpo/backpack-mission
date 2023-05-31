@@ -1,0 +1,419 @@
+.event-theme-img {
+    width: 100%;
+    padding-top: 58%;
+    border-radius: calc( 1 * var(--font-size) );
+    overflow: hidden;
+    position: relative;
+    margin-bottom: calc( 1.25 * var(--font-size) );
+}
+.content .Body2 {
+    line-height: calc( 1.625 * var(--font-size) );
+}
+
+// 分享跳窗
+
+.get-prize {
+    transition: 0.15s;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .get-prize-spark {
+        transform: scale(1.2);
+        opacity: 1;
+        z-index: 1;
+        transition: 0.15s cubic-bezier(0.71, 0.16, 0.67, 1.25);
+    }
+    .overlay-white {
+        background: white;
+        position: absolute;
+        width: calc( 9.3 * var(--font-size) );
+        height: calc( 9.3 * var(--font-size) );
+        z-index: 2;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+    }
+}
+.get-prize-btn {
+    outline: unset;
+    border: unset;
+    margin: calc( 2 * var(--font-size) ) calc( -2 * var(--font-size) ) calc( 1.5 * var(--font-size) ) calc( -2 * var(--font-size) );
+    background: unset;
+    opacity: 0.2;
+    position: relative;
+    z-index: 3;
+    width: calc( 9.3 * var(--font-size) );
+    height: calc( 9.3 * var(--font-size) );
+    border-radius: calc( 9.3 * var(--font-size) );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: calc( .08 * var(--font-size) ) solid transparentize($bfWhite, .8);
+    box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+    img {
+        width: 60%;
+        margin-top: calc( -1 * var(--font-size) );
+    }
+    span {
+        margin-top: calc( -0.25 * var(--font-size) );
+    }
+}
+.loading-lottie {
+    position: absolute;
+    width: calc( 9.3 * var(--font-size) );
+    height: calc( 9.3 * var(--font-size) );
+    top: 0;
+    left:  0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    z-index: 4;
+}
+
+.get-prize-spark {
+    transform: scale(1);
+    opacity: 1;
+}
+.get-prize.active {
+    .get-prize-btn {
+        // margin: calc( 2 * var(--font-size) );
+        opacity: 1;
+        transition: 0.1s;
+        z-index: 2;
+        animation: glowing 1.2s ease-in-out 0.2s infinite normal both;
+    }
+    
+}
+.get-prize-success {
+    padding-top: calc( 3 * var(--font-size) );
+    padding-bottom: calc( 3 * var(--font-size) );
+}
+.success-text {
+    color: $bfPrimary;
+    font-size: calc( 1.25 * var(--font-size) );
+    line-height: 2;
+    vertical-align: middle;
+    &:after {
+        vertical-align: middle;
+        content: "";
+        display: inline-block;
+        margin-left: calc( 0.5 * var(--font-size) );
+        width: calc( 2.5 * var(--font-size) );
+        height: calc( 2.5 * var(--font-size) );
+        background-image: url("./../img/bf-img3.png");
+        background-repeat: no-repeat;
+        background-size: calc( 2.5 * var(--font-size) );
+        background-position: center;
+    }
+}
+
+
+// ===== 文字相關 =====
+.caption1 {
+    color: $bfDarkGray;
+}
+
+// ===== 卡片相關 =====
+
+.card {
+    border-radius: calc( 1 * var(--font-size) );
+    border: calc( 0.1 * var(--font-size) ) solid $slightlyLightGray;
+    position: relative;
+    box-shadow: 0 calc( 0.25 * var(--font-size) ) calc( 1 * var(--font-size) ) rgba(186, 186, 186, 0.1);
+    padding: calc( 1 * var(--font-size) );
+    background: $bfWhite;
+    margin-bottom: calc( 0.75 * var(--font-size) );
+}
+
+
+// 尚未擁有卡片遮罩
+.overlay-text {
+    border-radius: calc( 1 * var(--font-size) );
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+    color: $bfWhite;
+    text-align: center;
+    vertical-align: middle;
+    span {
+        font-size: calc( 0.8125 * var(--font-size) );
+
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 1.25;
+        margin: auto;
+    }
+}
+
+//  ===== 揪集卡片 =====
+
+.small-card {
+    width: calc(88% / 3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: calc( .8 * var(--font-size) ) 2%;
+    // padding: calc( 1.5 * var(--font-size) ) calc( 1 * var(--font-size) ) calc( 1.75 * var(--font-size) ) calc( 1 * var(--font-size) );
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: calc( 1 * var(--font-size) );
+    // border: calc( 0.1 * var(--font-size) ) solid $slightlyLightGray;
+    position: relative;
+    // box-shadow: 0 calc( 0.25 * var(--font-size) ) calc( 1 * var(--font-size) ) rgba(186, 186, 186, 0.1);
+    box-shadow: unset;
+    border: unset;
+    .circle.small-card-more {
+        z-index: 3;
+        // margin: calc( 0.5 * var(--font-size) );
+        margin: 0;
+        position: absolute;
+        right: 0;
+        top: calc(88% / 3);
+        left: 0;
+        right: 0;
+        margin: auto;
+        transform: translateY(100%) translateX( calc( 2 * var(--font-size) ));
+        padding: 0;
+
+        width: calc( 1.5 * var(--font-size) );
+        height: calc( 1.5 * var(--font-size) );
+        font-size: calc( 1 * var(--font-size) );
+        line-height: calc( 1.5 * var(--font-size) ); 
+        border-width: 0;
+        text-align: center;
+        background-image: url('./../img/icon/ic-more-s-white.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: calc( 1.2 * var(--font-size) );
+    }
+}
+
+.small-card-img {
+    width: calc( 5.5 * var(--font-size) );
+    // height: calc( 7.7 * var(--font-size) );
+    padding-top: calc( 5.5 * var(--font-size) );
+    text-align: center;
+    margin-bottom: calc( 0.5 * var(--font-size) );
+    border-radius: calc( 1 * var(--font-size) );
+    // border: 1px solid #d5a;
+    position: relative;
+    overflow: hidden;
+    img {
+        position: absolute;
+        object-fit: cover;
+        min-width: 100%;
+        min-height: 100%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        margin: auto;
+    }
+}
+
+.small-card-title {
+    text-align: center;
+    font-weight: bold;
+    color: $bfDark;
+    font-size: calc( 0.85 * var(--font-size) );
+}
+.small-card-count {
+    // width: calc( 3.25 * var(--font-size) );
+    padding: 0 calc( .25 * var(--font-size) ) calc( .05 * var(--font-size) ) calc( .25 * var(--font-size) );
+    height: calc( 1.5 * var(--font-size) );
+    line-height: calc( 1.3 * var(--font-size) );
+    vertical-align: middle;
+    box-sizing: border-box;
+    font-size: calc( 0.85 * var(--font-size) );
+    // box-shadow: 0 calc( 0.25 * var(--font-size) ) calc( 1 * var(--font-size) ) rgba(186, 186, 186, 0.1);
+    // background-color: $bfWhite;
+    color: $bfDarkGray;
+    // border-radius: calc( 1.875 * var(--font-size) );
+    // border: calc( 0.1 * var(--font-size) ) solid $slightlyLightGray;
+    text-align: center;
+    border: unset;
+    // position: absolute;
+    // left: 0;
+    // right: 0;
+    // margin: auto;
+    bottom: calc( -0.7 * var(--font-size) );
+    display: inline-block;
+    &:before {
+        content: "×";
+        font-size: calc( 0.75 * var(--font-size) );
+    }
+}
+//  ===== 小卡左上角圖章 =====
+.stamp {
+    position: absolute;
+}
+
+// ===== 獎品卡 =====
+.award-card {
+    margin-bottom: calc( 1 * var(--font-size) );
+    padding-bottom: calc( .35 * var(--font-size) );
+    &.small {
+        .img {
+            border-radius: calc( 0.6* var(--font-size) );
+        }
+    }
+    .award-btn {
+        width: calc( 2.5 * var(--font-size) );
+        height: calc( 2.5 * var(--font-size) );
+        margin: 0;
+        margin-bottom: calc( .7 * var(--font-size) );
+        box-shadow: 0 0 0 0 transparentize($bfPrimary, 0.8);
+        transition: $transition;
+        .img {
+            width: calc( 1.8 * var(--font-size) );
+            height: calc( 1.8 * var(--font-size) );
+            padding-top: 0;
+        }
+        &:active {
+            box-shadow: 0 0 0 calc( 0.5 * var(--font-size) ) transparentize($bfPrimary, 0.8);
+        }
+    }
+    .small-card-item {
+        width: calc(100% / 3  );
+        padding: 0 calc( .625 * var(--font-size) ) 0 0;
+        box-sizing: border-box;
+        padding-bottom: calc( .65 * var(--font-size) );
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.small-card-wrap {
+    border-radius: calc( 0.5 * var(--font-size) );
+    box-shadow: 0px calc( 0.25 * var(--font-size) ) calc( 0.5 * var(--font-size) ) rgba(108, 108, 108, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 calc( 0.25 * var(--font-size) );
+    margin-bottom: calc( .9 * var(--font-size) );
+    position: relative;
+    background: $bfWhite;
+    &:first-of-type {
+        margin-left: 0;
+    }
+    &:last-of-type {
+        margin-right: 0;
+    }
+    .img {
+        width: 100%;
+        padding-top: 100%;
+        border-radius: calc( 0.5 * var(--font-size) );
+        overflow: hidden;
+    }
+    .status {
+        width: 100%;
+        padding-bottom: calc( 0.25 * var(--font-size) );;
+        background-color: $bfWhite;
+        color: $bfDarkGray;
+        font-size: calc( 0.75 * var(--font-size) );
+        line-height: 1.4;
+        letter-spacing: -1px;
+        text-align: center;
+        border-radius: calc( 1.875 * var(--font-size) );
+        border:calc(  0.1 * var(--font-size) ) solid $slightlyLightGray;
+        text-align: center;
+        vertical-align: middle;
+        box-sizing: border-box;
+        box-shadow: 0 calc( 0.25 * var(--font-size) ) calc( 1 * var(--font-size) ) rgba(186, 186, 186, 0.1);
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        bottom: calc( -1 * var(--font-size) );
+        display: inline-block;
+        overflow: hidden;
+    }
+}
+
+.award-card-img {
+    border-radius: calc( 0.55 * var(--font-size) );
+    width: calc( 4.25 * var(--font-size) );
+    padding-top: calc( 4.25 * var(--font-size) );
+    &.first {
+        border-radius: calc( 0.8 * var(--font-size) );
+        width: calc( 5.1 * var(--font-size) );
+        padding-top: calc( 5.1 * var(--font-size) );
+    }
+}
+
+.award-card-title {
+    line-height: calc( 1.5 * var(--font-size) );
+    margin-bottom: calc( .75 * var(--font-size) );
+    & + .d-flex > .d-flex {
+        margin-right: calc( -0.25 * var(--font-size) );
+    }
+}
+
+.stamp {
+    position: absolute;
+    left: calc( -0.75 * var(--font-size) );
+    top: calc( -0.75 * var(--font-size) );
+    width: calc( 2.625 * var(--font-size) );
+    padding-top: calc( 2.625 * var(--font-size) );
+    z-index: 1;
+}
+
+
+@keyframes glowing {
+    0% {
+        // border: 0 solid $bfPrimary;
+        box-shadow:
+                0 0 0 calc( .2 * var(--font-size) ) $bfPrimary, 
+                0 0 0 calc( 0 * var(--font-size) ) transparentize($bfPrimary, 0.85),
+                0 0 0 calc( 0 * var(--font-size) ) transparentize($bfPrimary, 0.85);
+    }
+    20% {
+        // border: 0.3 * var(--font-size) ) solid $bfPrimary;
+        box-shadow:
+                0 0 0 calc( 0.3 * var(--font-size) ) $bfPrimary, 
+                0 0 0 calc( 0 * var(--font-size) ) transparentize($bfPrimary, 0.85),
+                0 0 0 calc( 0 * var(--font-size) ) transparentize($bfPrimary, 0.85);
+    }
+    30% {
+        // border: calc( 0.5 * var(--font-size) ) solid $bfPrimary;
+        box-shadow:
+                0 0 0 calc( 0.5 * var(--font-size) ) $bfPrimary, 
+                0 0 0 calc( 0.65 * var(--font-size) ) transparentize($bfPrimary, 0.85),
+                0 0 0 calc( 0.65 * var(--font-size) ) transparentize($bfPrimary, 0.85);
+    }
+    60% {
+        // border: calc( 0.5 * var(--font-size) ) solid $bfPrimary;
+        box-shadow:
+                0 0 0 calc( 0.5 * var(--font-size) ) $bfPrimary, 
+                0 0 0 calc( 1.2 * var(--font-size) ) transparentize($bfPrimary, 0.85),
+                0 0 0 calc( 1.85 * var(--font-size) ) transparentize($bfPrimary, 0.85);
+    }
+    90% {
+        // border: calc( 0.5 * var(--font-size) ) solid $bfPrimary;
+        box-shadow:
+                0 0 0 calc( 0.5 * var(--font-size) ) $bfPrimary, 
+                0 0 0 calc( 1.2 * var(--font-size) ) transparentize($bfPrimary, 0.85),
+                0 0 0 calc( 1.85 * var(--font-size) ) transparentize($bfPrimary, 0.85);
+    }
+    100% {
+        // border: calc( 0.2 * var(--font-size) ) solid $bfPrimary;
+        box-shadow:
+                0 0 0 calc( .2 * var(--font-size) ) $bfPrimary, 
+                0 0 0 0 transparentize($bfPrimary, 0.85),
+                0 0 0 0 transparentize($bfPrimary, 0.85);
+    }
+}

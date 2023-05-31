@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歷史紀錄</title>
+    <link rel="icon" type="image/png" href="./img/favicon.png">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/jquery.fancybox.min.css" rel="stylesheet">
+    <link href="./css/reset.css" rel="stylesheet">
+    <link href="./css/main.css" rel="stylesheet">
+    <link href="./css/gash.css" rel="stylesheet">
+    <link href="./css/mission.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="anytix">
+        <div class="main-content" id="app">
+            <div class="mission-history animated fadeIn">
+                <div class="page-title-wrap">
+                    <!-- <a class="previous-link" data-color="dark" href="./mission.html"></a> -->
+                    <h2>歷史紀錄</h2>
+                </div>
+                <div class="mission-box">
+                    <div class="mission-tabs">
+                        <div class="mission-tab-item" v-on:click="activetab='1'"
+                            v-bind:class="[ activetab === '1' ? 'active' : '' ]">任務</div>
+                        <div class="mission-tab-item" v-on:click="activetab='2'"
+                            v-bind:class="[ activetab === '2' ? 'active' : '' ]">黑洞</div>
+                    </div>
+                    <div class="mission-area">
+                        <!-- 任務 -->
+                        <template v-if="activetab ==='1'">
+                            <!-- 空版 -->
+                            <template v-if="missionData === 0">
+                                <div class="nothing-board">
+                                    <img src="./img/icon/ic_nothing-board.svg">
+                                    <p>目前尚無歷史紀錄</p>
+                                </div>
+                            </template>
+                            <!-- 有版 -->
+                            <template v-if="missionData === 1">
+                                <div class="history-wrap">
+                                    <template v-for="item in missionStatus">
+                                        <div class="history-status">
+                                            <a :href="item.type === 'detail' ? item.link : null">
+                                                <div class="history-status-list">
+                                                    <div class="mci-img"><img :src="item.mciImg"></div>
+                                                    <div class="mci-info">
+                                                        <h3 class="mission-title">{{item.title}}</h3>
+                                                        <template v-if="item.type === 'detail'" key="historyDetail">
+                                                            <div class="ic-detail"></div>
+                                                        </template>
+                                                        <p class="mci-date">開始時間：{{item.dateStart}}</p>
+                                                        <p class="mci-date">結束時間：{{item.dateEnd}}</p>
+                                                        <div class="status">
+                                                            <span :class="[ item.status === '已完成' ? 'finish' : '' ]">
+                                                                {{item.status}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+                        </template>
+                        <!-- 黑洞 -->
+                        <template v-if="activetab ==='2'">
+                            <!-- 空版 -->
+                            <template v-if="blackholeData === 0">
+                                <div class="nothing-board">
+                                    <img src="./img/icon/ic_nothing-board.svg">
+                                    <p>目前尚無歷史紀錄</p>
+                                </div>
+                            </template>
+                            <!-- 有版 -->
+                            <template v-if="blackholeData === 1">
+                                <div class="history-wrap">
+                                    <template v-for="item in blackholeStatus">
+                                        <div class="history-status">
+                                            <div class="history-status-list">
+                                                <div class="mci-img"><img :src="item.mciImg"></div>
+                                                <div class="mci-info">
+                                                    <h3 class="mission-title">{{item.title}}</h3>
+                                                    <p class="mci-date">開始時間：{{item.dateStart}}</p>
+                                                    <p class="mci-date">兌換時間：{{item.dateEnd}}</p>
+                                                    <div class="open">兌換紀錄</div>
+                                                </div>
+                                            </div>
+                                            <div class="blackhole-collection" style="display:none;">
+                                                <template v-for="item in blackholeCollection">
+                                                    <div class="mission-collection-item">
+                                                        <div class="mci-img"><img :src="item.mciCard">
+                                                            <div class="ic-fresh"></div>
+                                                        </div>
+                                                        <span class="mci-name" v-html="item.mciName"></span>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+                        </template>
+                        <!-- 加載鈕 -->
+                        <button class="btn-more" @click="exchange"
+                            v-if="activetab ==='1' &&missionData === 1 || activetab ==='2' && blackholeData === 1">
+                            <div class="btn-loading more" id="dot-loading" v-show="btnloading"></div>
+                            <span v-show="!btnloading">查看更多</span>
+                            <!-- chrome 禁止直接讀取 local json，這邊要用 local server 才看的到-->
+                        </button>
+                    </div><!-- /mission-box -->
+                </div><!-- /mission-history -->
+            </div>
+        </div>
+        <script src="./js/vue.min.js"></script>
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/jquery.fancybox.min.js"></script>
+        <script src="js/custom.js"></script>
+        <script src="./js/lottie.min.js"></script>
+        <script>
+            var jQfn = function () {
+                var animation = bodymovin.loadAnimation({
+                    container: document.getElementById('dot-loading'),
+                    // chrome 禁止直接讀取 local json，這邊要用 local server 才看的到
+                    path: './js/json/dot-loading.json',
+                    renderer: 'svg',
+                    loop: true,
+                    autoplay: true,
+                    name: "Demo Animation",
+                });
+            };
+
+            var vm = new Vue({
+                el: '#app',
+                data() {
+                    return {
+                        btnloading: false,
+                        activetab: '2',
+                        missionData: 1,
+                        blackholeData: 1,
+
+                        missionStatus: [
+                            {
+                                type: '',
+                                link: '',
+                                mciImg: './img/mission/history-collection-1.jpg',
+                                title: '這是獎品名稱20個字這是獎品名稱20個字',
+                                dateStart: '2021/10/28 14:00',
+                                dateEnd: '2021/10/30 14:00',
+                                status: '已完成',
+                            }, {
+                                type: 'detail',
+                                link: './history.html',
+                                mciImg: './img/mission/sanrio-main.jpg',
+                                title: '這邊是獎品名稱最多20字',
+                                dateStart: '2021/10/28 14:00',
+                                dateEnd: '2021/10/30 14:00',
+                                status: '已完成',
+                            }, {
+                                type: '',
+                                link: '',
+                                mciImg: './img/mission/sanrio-3.jpg',
+                                title: '這邊是獎品名稱最多 20 字333',
+                                dateStart: '2021/10/28 14:00',
+                                dateEnd: '2021/10/30 14:00',
+                                status: '已過期',
+                            },
+                        ],
+
+                        blackholeStatus: [
+                            {
+                                mciImg: './img/mission/blackhole-theme-1.jpg',
+                                title: '這是獎品名稱20個字這是獎品名稱20個字',
+                                dateStart: '2021/10/28 14:00',
+                                dateEnd: '2021/10/30 14:00',
+
+                            }, {
+                                mciImg: './img/mission/sanrio-main.jpg',
+                                title: '這邊是獎品名稱最多 20 字',
+                                dateStart: '2021/10/28 14:00',
+                                dateEnd: '2021/10/30 14:00',
+                            },
+                        ],
+                        blackholeCollection: [
+                            {
+                                mciCard: './img/mission/history-collection-1.jpg',
+                                mciName: '標題最多可顯示兩行超過就會隱藏',
+                            },
+                            {
+                                mciCard: './img/mission/history-collection-2.jpg',
+                                mciName: '標題最多可顯示兩行超過就會隱藏',
+                            },
+                            {
+                                mciCard: './img/mission/sanrio-main.jpg',
+                                mciName: '標題最多可顯示兩行',
+                            },
+                            {
+                                mciCard: './img/mission/history-collection-3.jpg',
+                                mciName: '標題最多顯示兩行',
+                            },
+                            {
+                                mciCard: './img/mission/history-collection-4.jpg',
+                                mciName: '標題最多顯示兩行',
+                            },
+                            {
+                                mciCard: './img/mission/sanrio-main.jpg',
+                                mciName: '標題標題',
+                            },
+                            {
+                                mciCard: './img/mission/gashpoint.png',
+                                mciName: 'GASH <span>50 點</span>',
+                            },
+                        ],
+                    }
+                },
+                watch: {
+                    activeTab: function () {
+                        this.tabListControl
+                    },
+                },
+                mounted: function () {
+                    this.$nextTick(function () {
+                        //- vm.prizeLoading = false
+                        //- window.setTimeout(function(){
+                        //-     vm.loading = false
+                        //- }, vm.loadingTimer);
+                        jQfn()
+                    })
+                },
+                methods: {
+                    exchange: function () {
+                        this.btnloading = true;
+                        window.setTimeout(function () {
+                            // $.fancybox.open( $('#exchangeSuccess'), {
+                            //     touch: false
+                            // });
+                            vm.btnloading = false;
+                        }, 3000);
+                    }
+                },
+            })
+
+            //展開收合(因使用 vue 造成資料切換時無重新讀取 js)
+            $(function () {
+                $(".blackhole-collection").css("display", "none");
+
+                $(".open").click(function () {
+                    $(this).toggleClass("expand");
+                    if ($(this).hasClass("expand")) {
+                        $(this).text("兌換紀錄");
+                        $(this).parent().parent().siblings(".blackhole-collection").slideDown("slow");
+                    } else {
+                        $(this).text("兌換紀錄");
+                        $(this).parent().parent().siblings(".blackhole-collection").slideUp("slow");
+                    };
+                });
+            });
+        </script>
+</body>
+
+</html>

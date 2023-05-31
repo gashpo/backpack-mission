@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title
+            block title
+        link(rel="icon" type="image/png" href="./img/favicon.png")
+        //-  animate
+        link(href="css/animate.css" rel="stylesheet")
+        //- dialog
+        link(href="css/jquery.fancybox.min.css" rel="stylesheet")
+        //-  Custom CSS 
+        link(href="./css/reset.css" rel="stylesheet")
+        link(href="./css/mission.min.css" rel="stylesheet")
+    body
+        .anytix
+            #app.main-content
+                block content 
+
+        
+        block end
+        script(src="./js/vue.min.js")
+        script(src="js/jquery-3.4.1.min.js")
+        //- dialog
+        script(src="js/jquery.fancybox.min.js")
+        //- custom
+        script(src="js/custom.js")
+        //- // lottie anmation
+        script(src="./js/lottie.min.js")
+        block js

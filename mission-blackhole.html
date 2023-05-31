@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黑洞任務</title>
+    <link rel="icon" type="image/png" href="./img/favicon.png">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/jquery.fancybox.min.css" rel="stylesheet">
+    <link href="./css/reset.css" rel="stylesheet">
+    <link href="./css/main.css" rel="stylesheet">
+    <link href="./css/gash.css" rel="stylesheet">
+    <link href="./css/mission.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="anytix">
+        <div class="main-content" id="app">
+            <div class="mission-blackhole animated fadeIn">
+                <div class="page-title-wrap">
+                    <!-- <a class="previous-link" data-color="dark" href="./mission.html"></a> -->
+                    <h2>兌換獎勵</h2>
+                </div>
+                <div class="blackhole-box">
+                    <div class="column ai-center">
+                        <div class="mission-info-img"><img src="./img/mission/glassescat.jpg"></div>
+                        <p class="t-c Body4">原子少年人形公仔限量版一隻可 20 個字示意</p>
+                        <!-- <p class="txt">選擇即將兌換的收藏品</p>
+                        <p class="note">注意：兌換成功後，你的收藏品將被刪除，一但刪除後，將無法復原，請小心操作。</p> -->
+                        <a href="#" target="_blank" class="mission-get">前往獲取</a>
+                    </div>
+                    <p class="mission-step-title">保留 <span>此區完成任務後會保留收藏卡</span></p>
+                    <div class="mission-collection">
+                        <!-- 已加入小卡狀態  -->
+                        <template v-for="blackhole in missionCollection" ket="havecard">
+                            <div class="mission-collection-item" data-fancybox data-src="#exchangeList">
+                                <div class="mci-img"><img :src="blackhole.img">
+                                    <div class="ic-fresh"></div>
+                                </div>
+                                <span class="mci-name">{{blackhole.mciName}}</span>
+                            </div>
+                        </template>
+                        <!-- 尚未擁有小卡狀態  -->
+                        <template v-for="blackhole in missionCollection" ket="nocard">
+                            <div class="mission-collection-item" data-fancybox data-src="#exchangeList">
+                                <div class="mci-img">
+                                    <div class="empty">尚未擁有</div>
+                                    <img :src="blackhole.img">
+                                </div>
+                                <span class="mci-name">{{blackhole.mciName}}</span>
+                            </div>
+                        </template>
+                    </div>
+                    <p class="mission-step-title">銷毀 <span class="warning">❗️此區完成任務後會銷毀收藏卡</span></p>
+                    <div class="mission-collection">
+                        <!-- 已擁有小卡 但尚未加入狀態  -->
+                        <template v-for="blackhole in missionCollection" ket="nothing">
+                            <div class="mission-collection-item" data-fancybox data-src="#exchangeList">
+                                <div class="mci-img">
+                                    <div class="add">+</div>
+                                </div>
+                                <span class="mci-name">{{blackhole.mciName}}</span>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="checkbox">
+                        <input id="agreement" type="checkbox" v-model="agree">
+                        <label for="agreement">我已閱讀且同意<span data-fancybox data-src="#notice">活動說明及注意事項</span></label>
+                    </div>
+                    <div class="flex-btn">
+                        <p class="gash-info">蒐集完成後將扣除 <span>GASH50點</span> 完成任務！</p>
+                        <button class="btn-primary mt-none mb-xxs block" :class="{ 'disabled': !agree }" data-fancybox
+                            data-src="#point1">
+                            <span>點我完成任務 (收藏品✕，餘額✕)</span>
+                            <!-- chrome 禁止直接讀取 local json，這邊要用 local server 才看的到-->
+                            <!-- 共有五種狀態 請看下方 popup#point1~5，扣點完成後按鈕文案變「查看扣點紀錄」，收藏品尚未收集完成時按鈕反灰，加 .disabled -->
+                        </button>
+                        <button class="btn-primary mt-none mb-xxs block" :class="{ 'disabled': !agree }" data-fancybox
+                            data-src="#point2">
+                            <span>點我完成任務 (收藏品✕，餘額○)</span>
+                        </button>
+                        <button class="btn-primary mt-none mb-xxs block" :class="{ 'disabled': !agree }" data-fancybox
+                            data-src="#point3">
+                            <span>點我完成任務 (收藏品○，餘額✕)</span>
+                        </button>
+                        <button class="btn-primary mt-none mb-xxs block" :class="{ 'disabled': !agree }" data-fancybox
+                            data-src="#point4">
+                            <span>點我完成任務 (收藏品○，餘額○)</span>
+                        </button>
+                        <button class="btn-primary mt-none mb-xxs block" :class="{ 'disabled': !agree }" data-fancybox
+                            data-src="#point5">
+                            <span>點我完成任務 (扣點進行中)</span>
+                        </button>
+                    </div>
+                    <!------------ 更換小卡 popup ------------>
+                    <div class="dialog notice-dialog no-close" id="exchangeList" style="display: none;">
+                        <div class="dialog-content-wrap">
+                            <div class="notice-dialog-title">選擇收藏品</div>
+                            <div class="dialog-scroll">
+                                <div class="change-card">
+                                    <input type="radio" id="exchange1" value="" name="exchangeCard">
+                                    <label class="change-box" for="exchange1">
+                                        <div class="mci-img" data-ratio="1" data-size="blackhole-list">
+                                            <img src="./img/mission/sanrio-main.jpg">
+                                            <div class="ic-checked"></div>
+                                        </div>
+                                        <span class="Subhead2">Nelson - 典藏首發版 - 0001 不管有幾行字都讓他全部秀出來全部秀出來</span>
+                                    </label>
+                                </div>
+                                <div class="change-card">
+                                    <input type="radio" id="exchange2" value="" name="exchangeCard">
+                                    <label class="change-box" for="exchange2">
+                                        <div class="mci-img" data-ratio="1" data-size="blackhole-list"><img
+                                                src="./img/mission/history-collection-2.jpg">
+                                            <div class="ic-checked used"></div>
+                                        </div>
+                                        <span class="Subhead2">Nelson - 典藏首發版 - 0001</span>
+                                    </label>
+                                </div>
+                                <div class="change-card">
+                                    <input type="radio" id="exchange3" value="" name="exchangeCard">
+                                    <label class="change-box" for="exchange3">
+                                        <div class="mci-img" data-ratio="1" data-size="blackhole-list"><img
+                                                src="./img/mission/history-collection-3.jpg">
+                                            <div class="ic-checked"></div>
+                                        </div>
+                                        <span class="Subhead2">Nelson - 典藏首發版 - 0001</span>
+                                    </label>
+                                </div>
+                                <div class="change-card">
+                                    <input type="radio" id="exchange4" value="" name="exchangeCard">
+                                    <label class="change-box" for="exchange4">
+                                        <div class="mci-img" data-ratio="1" data-size="blackhole-list"><img
+                                                src="./img/mission/gashpoint.png">
+                                            <div class="ic-checked"></div>
+                                        </div>
+                                        <span class="Subhead2">Nelson - 典藏首發版 - 0001</span>
+                                    </label>
+                                </div>
+                                <div class="change-card">
+                                    <input type="radio" id="exchange5" value="" name="exchangeCard">
+                                    <label class="change-box" for="exchange5">
+                                        <div class="mci-img" data-ratio="1" data-size="blackhole-list"><img
+                                                src="./img/mission/history-collection-1.jpg">
+                                            <div class="ic-checked"></div>
+                                        </div>
+                                        <span class="Subhead2">Nelson - 典藏首發版 - 0001</span>
+                                    </label>
+                                </div>
+                                <div class="change-card">
+                                    <input type="radio" id="exchange6" value="" name="exchangeCard">
+                                    <label class="change-box" for="exchange6">
+                                        <div class="mci-img" data-ratio="1" data-size="blackhole-list"><img
+                                                src="./img/mission/history-collection-2.jpg">
+                                            <div class="ic-checked"></div>
+                                        </div>
+                                        <span class="Subhead2">Nelson - 典藏首發版 - 0001</span>
+                                    </label>
+                                </div>
+                                <div class="change-card">
+                                    <input type="radio" id="exchange7" value="exchange7" name="exchangeCard">
+                                    <label class="change-box" for="exchange7">
+                                        <div class="mci-img" data-ratio="1" data-size="blackhole-list"><img
+                                                src="./img/mission/history-collection-3.jpg">
+                                            <div class="ic-checked"></div>
+                                        </div>
+                                        <span class="Subhead2">Nelson - 典藏首發版 - 0001</span>
+                                    </label>
+                                </div>
+                                <div class="change-card">
+                                    <input type="radio" id="exchange8" value="exchange8" name="exchangeCard">
+                                    <label class="change-box" for="exchange8">
+                                        <div class="mci-img" data-ratio="1" data-size="blackhole-list"><img
+                                                src="./img/mission/history-collection-4.jpg">
+                                            <div class="ic-checked"></div>
+                                        </div>
+                                        <span class="Subhead2">Nelson - 典藏首發版 - 0001</span>
+                                    </label>
+                                </div>
+                                <div class="change-card">
+                                    <input type="radio" id="exchange9" value="exchange9" name="exchangeCard">
+                                    <label class="change-box" for="exchange9">
+                                        <div class="mci-img" data-ratio="1" data-size="blackhole-list"><img
+                                                src="./img/mission/history-collection-1.jpg">
+                                            <div class="ic-checked"></div>
+                                        </div>
+                                        <span class="Subhead2">Nelson - 典藏首發版 - 0001</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="dialog-button text-primary" onclick="$.fancybox.close();">確定變更</button>
+                    </div>
+                    <!------------ 扣點 popup ------------>
+                    <!-- ↓第一種：收藏品✕，餘額✕ -->
+                    <div class="dialog point-dialog no-close" id="point1" style="display: none;">
+                        <div class="dialog-content-wrap">
+                            <div class="point-dialog-title">點數錢包扣除</div>
+                            <div class="dialog-scroll">
+                                <p class="point-dialog-desc">參與此項任務，您將扣除GASH點數</p>
+                                <h2>50點</h2>
+                                <h6>目前剩餘 GASH 點數：<span>5 點</span></h6>
+                                <div class="point-dialog-notice notice-collection">請先完成收藏品的收集，再進行GASH扣點完成任務！</div>
+                            </div>
+                        </div>
+                        <button class="dialog-button submit" onclick="window.open('#')">立即儲值</button>
+                        <button class="dialog-button cancel" onclick="$.fancybox.close();">我知道了</button>
+                    </div>
+                    <!-- ↓第二種：收藏品✕，餘額○ -->
+                    <div class="dialog point-dialog no-close" id="point2" style="display: none;">
+                        <div class="dialog-content-wrap">
+                            <div class="point-dialog-title">點數錢包扣除</div>
+                            <div class="dialog-scroll">
+                                <p class="point-dialog-desc">參與此項任務，您將扣除GASH點數</p>
+                                <h2>50點</h2>
+                                <h6>目前剩餘 GASH 點數：3,115 點</h6>
+                                <div class="point-dialog-notice notice-collection">請先完成收藏品的收集，再進行GASH扣點完成任務！</div>
+                            </div>
+                        </div>
+                        <button class="dialog-button" onclick="$.fancybox.close();">我知道了</button>
+                    </div>
+                    <!-- ↓第三種：收藏品○，餘額✕ -->
+                    <div class="dialog point-dialog no-close" id="point3" style="display: none;">
+                        <div class="dialog-content-wrap">
+                            <div class="point-dialog-title">點數錢包扣除</div>
+                            <div class="dialog-scroll">
+                                <p class="point-dialog-desc">參與此項任務，您將扣除GASH點數</p>
+                                <h2>50點</h2>
+                                <h6>目前剩餘 GASH 點數：<span>5 點</span></h6>
+                                <div class="point-dialog-notice notice-point">您的點數不足，請儲值足夠點數後再行扣點！</div>
+                            </div>
+                        </div>
+                        <button class="dialog-button submit" onclick="window.open('#')">立即儲值</button>
+                        <button class="dialog-button cancel" onclick="$.fancybox.close();">我知道了</button>
+                    </div>
+                    <!-- ↓第四種：收藏品○，餘額○ -->
+                    <div class="dialog point-dialog no-close" id="point4" style="display: none;">
+                        <div class="dialog-content-wrap">
+                            <div class="point-dialog-title">點數錢包扣除</div>
+                            <div class="dialog-scroll">
+                                <p class="point-dialog-desc">參與此項任務，您將扣除GASH點數</p>
+                                <h2>50點</h2>
+                                <h6>目前剩餘 GASH 點數：3,115 點</h6>
+                                <div class="point-dialog-notice notice-warning">*確認扣除後，將消耗GASH點數與收藏品，並獲得獎勵</div>
+                                <div class="checkbox">
+                                    <input id="agreededuct" type="checkbox" v-model="agreededuct">
+                                    <label for="agreededuct">
+                                        我明白點擊「確認扣除」後將扣除點數，且無法返回
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="dialog-button submit" id="show-error" :disabled="!agreededuct" @click="deduct">
+                            <div class="btn-loading" id="dot-loading" v-show="btnloading"></div>
+                            <span v-show="!btnloading">確認扣除 (失敗)</span>
+                        </button>
+                        <button class="dialog-button submit" :disabled="!agreededuct" @click="exchange">
+                            <!-- <div class="btn-loading" id="dot-loading" v-show="btnloading"></div>
+                            <span v-show="!btnloading">確認扣除 (成功)</span> -->
+                            <span>確認扣除 (成功)</span>
+                        </button>
+                        <button class="dialog-button cancel" @click="cancelclose">取消</button>
+                    </div>
+                    <!-- ↓第五種：扣點進行中 -->
+                    <div class="dialog point-dialog no-close" id="point5" style="display: none;">
+                        <div class="dialog-content-wrap">
+                            <div class="point-dialog-title">點數錢包扣除</div>
+                            <div class="dialog-scroll">
+                                <p class="point-dialog-desc">參與此項任務，您將扣除GASH點數</p>
+                                <h2>50點</h2>
+                                <div class="point-dialog-notice notice-record">
+                                    <dl>
+                                        <dt>訂單編號</dt>
+                                        <dd>2023041721009399888399</dd>
+                                        <dt>訂單成立時間</dt>
+                                        <dd>扣點進行中，請於10分鐘後再次確認</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="dialog-button" onclick="$.fancybox.close();">我知道了</button>
+                    </div>
+                    <!-- /dialog notice-dialog no-close -->
+                    <!------------ 領取失敗訊息 / 有3種文字訊息  ------------>
+                    <div class="error-message" id="error-message" style="display: none;">
+                        <span class="icon"><img src="./img/icon/ic-info-s-secb_o.svg"></span>
+                        <!-- <p>獎品已全數領取完畢，錯誤代碼：2d3ef</p> -->
+                        <!-- <p>可領取獎品數量不足，錯誤代碼：2e321</p> -->
+                        <p>領取失敗，請稍後再試或洽客服詢問。<br>錯誤代碼：2sdsw</p>
+                        <span class="error-hide" id="error-hide">
+                            <img src="./img/icon/ic-close-s-dark.png">
+                        </span>
+                    </div>
+                    <!------------ 兌換成功 popup ------------>
+                    <div class="dialog no-close" id="exchangeSuccess" style="display: none;">
+                        <div class="dialog-content-wrap"><img class="po-a top success-bg-wrap animated slideInDown"
+                                src="./img/mission/spark-bg-s.svg" alt="取得獎品">
+                            <div class="Subhead2-M py-md t-c">恭喜你，兌換成功！</div>
+                            <div class="mission-prize-img"><img src="./img/mission/blackhole-theme-1.jpg"></div>
+                            <p class="t-c Body4 mb-xl">原子少年人形公仔限量版一隻 20 字示意</p>
+                            <button class="btn-primary mb-none block"
+                                onclick="window.location = './mission.html'">回到任務頁</button>
+                        </div>
+                    </div>
+                    <!------------ 活動說明及注意事項 popup ------------>
+                    <div class="dialog notice-dialog no-close" id="notice" style="display: none;">
+                        <div class="dialog-content-wrap">
+                            <div class="notice-dialog-title">活動說明及注意事項</div>
+                            <div class="dialog-scroll">
+                                <ol>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。</li>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。</li>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。</li>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。</li>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、</li>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。</li>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。</li>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。</li>
+                                </ol>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, consequatur!
+                                    Consequuntur vero dolor nostrum, nemo suscipit voluptatum quae numquam, tenetur
+                                    optio expedita earum modi, laborum rerum sapiente voluptates enim dicta.</p>
+                            </div>
+                        </div>
+                        <button class="dialog-button" onclick="$.fancybox.close();">我知道了</button>
+                    </div>
+                </div><!-- /blackhole-box -->
+            </div><!-- /mission-blackhole -->
+        </div>
+    </div>
+    <script src="./js/vue.min.js"></script>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="./js/lottie.min.js"></script>
+    <script>
+        var jQfn = function () {
+            var animation = bodymovin.loadAnimation({
+                container: document.getElementById('dot-loading'),
+                // chrome 禁止直接讀取 local json，這邊要用 local server 才看的到
+                path: './js/json/dot-loading-white.json',
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                name: "Demo Animation",
+            });
+        }
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    btnloading: false,
+                    agree: false,
+                    agreededuct: false,
+                    missionCollection: [
+                        {
+                            img: './img/mission/sanrio-main.jpg',
+                            mciName: '標題最多可顯示兩行超過就會隱藏',
+                        }, {
+                            img: './img/mission/history-collection-2.jpg',
+                            mciName: 'Nelson',
+                        }
+                    ],
+                }
+            },
+            mounted: function () {
+                this.$nextTick(function () {
+                    //- vm.prizeLoading = false
+                    //- window.setTimeout(function(){
+                    //-     vm.loading = false
+                    //- }, vm.loadingTimer);
+                    jQfn()
+                })
+            },
+            methods: {
+                deduct: function () {
+                    vm.btnloading = true;
+                    window.setTimeout(function () {
+                        $.fancybox.close();
+                        vm.agreededuct = false;
+                    }, 3000);
+                    window.setTimeout(function () {
+                        vm.btnloading = false;
+                        vm.agree = false;
+                        $("#error-message").slideDown();
+                    }, 3200);
+                },
+                exchange: function () {
+                    vm.btnloading = true;
+                    window.setTimeout(function () {
+                        $.fancybox.close();
+                        vm.agreededuct = false;
+                        $.fancybox.open($('#exchangeSuccess'), {
+                            touch: false
+                        });
+                    }, 3000);
+                    window.setTimeout(function () {
+                        vm.btnloading = false;
+                    }, 3200);
+                },
+                cancelclose: function () {
+                    vm.agree = false;
+                    vm.agreededuct = false;
+                    $.fancybox.close();
+                }
+            }
+        })
+        // 領取失敗訊息
+        $(function () {
+            $(".mission-info-img").click(function () {
+                $("#error-message").slideDown();
+            });
+            $("#error-hide").click(function () {
+                $("#error-message").hide();
+            });
+        });
+
+        // 
+        $(function () {
+            var box = $(".mission-collection");
+            var items = box.children(".mission-collection-item");
+            if (items.length < 4) {
+                box.css("justify-content", "center");
+            }
+        })
+    </script>
+</body>
+
+</html>

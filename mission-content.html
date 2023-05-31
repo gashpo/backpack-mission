@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>格子任務</title>
+    <link rel="icon" type="image/png" href="./img/favicon.png">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/jquery.fancybox.min.css" rel="stylesheet">
+    <link href="./css/reset.css" rel="stylesheet">
+    <link href="./css/main.css" rel="stylesheet">
+    <link href="./css/gash.css" rel="stylesheet">
+    <link href="./css/mission.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="anytix">
+        <div class="main-content" id="app">
+            <div class="mission-blackhole mission-content animated fadeIn">
+                <div class="mission-content-img">
+                    <img src="./img/mission/sanrio-main.jpg">
+                </div>
+                <div class="mission-area">
+                    <div class="mission-content-status">
+                        <template v-if="status === 0" key="undone">
+                            <div class="tags">未完成</div>
+                        </template>
+                        <template v-if="status === 1" key="finish">
+                            <div class="tags finish">已完成</div>
+                        </template>
+                        <p>活動日期結束前都可變更選擇</p>
+                    </div>
+                    <p class="mission-content-info">{{missionInfo}}<span data-fancybox
+                            data-src="#notice">活動說明及注意事項</span></p>
+                    <!-- 無tag樣式 -->
+                    <template>
+                        <p class="mission-step-title">Step1 選擇風格</p>
+                        <div class="mission-collection">
+                            <template v-for="item in missionCollection">
+                                <div class="mission-collection-item row-3 step1" data-fancybox data-src="#exchangeList">
+                                    <div class="mci-img">
+                                        <img :src="item.img">
+                                        <template v-if="item.state === 'join'" key="havecard">
+                                            <div class="ic-fresh"></div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                    <!-- 有tag樣式 -->
+                    <template>
+                        <p class="mission-step-title">Step2 選擇{{title}}</p>
+                        <div class="mission-collection">
+                            <template v-for="item in missionCollection">
+                                <div class="mission-collection-item row-3" data-fancybox data-src="#exchangeList">
+                                    <div class="mci-tags">{{title}} {{item.number}}</div>
+                                    <div class="mci-img">
+                                        <img :src="item.img">
+                                        <template v-if="item.state === 'join'" key="havecard">
+                                            <div class="ic-fresh"></div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="add">+</div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                    <!-- <p class="mission-step-title">Step3 GASH點數</p>
+                    <div class="mission-collection">
+                        <div class="mission-collection-item row-3">
+                            <div class="mci-img" data-fancybox data-src="#point1">
+                                <div class="add">+</div>
+                                <img src="img/mission/gashpoint.png">
+                            </div>
+                            <span class="mci-name">GASH 50點<br>(收N/餘N)</span>
+                        </div>
+                        <div class="mission-collection-item row-3">
+                            <div class="mci-img" data-fancybox data-src="#point2">
+                                <div class="add">+</div>
+                                <img src="img/mission/gashpoint.png">
+                            </div>
+                            <span class="mci-name">GASH 50點<br>(收Y/餘N)</span>
+                        </div>
+                        <div class="mission-collection-item row-3">
+                            <div class="mci-img" data-fancybox data-src="#point3">
+                                <div class="add">+</div>
+                                <img src="img/mission/gashpoint.png">
+                            </div>
+                            <span class="mci-name">GASH 50點<br>(收N/餘Y)</span>
+                        </div>
+                        <div class="mission-collection-item row-3">
+                            <div class="mci-img" data-fancybox data-src="#point4">
+                                <div class="add">+</div>
+                                <img src="img/mission/gashpoint.png">
+                            </div>
+                            <span class="mci-name">GASH 50點<br>(收Y/餘Y)</span>
+                        </div>
+                        <div class="mission-collection-item row-3">
+                            <div class="mci-img" data-fancybox data-src="#point5">
+                                <img src="img/mission/gashpoint.png">
+                            </div>
+                            <span class="mci-name">GASH 50點<br>(已扣點)</span>
+                        </div>
+                        <div class="mission-collection-item row-3">
+                            <div class="mci-img" data-fancybox data-src="#point6">
+                                <div class="add">+</div>
+                                <img src="img/mission/gashpoint.png">
+                            </div>
+                            <span class="mci-name">GASH 50點<br>(進行中)</span>
+                        </div>
+                    </div> -->
+                    <p class="gash-info">蒐集完成後將扣除 <span>GASH50點</span> 完成任務！</p>
+                    <button class="btn-complete disabled" data-fancybox data-src="#point1">
+                        點我完成任務 (收藏品✕，餘額✕)
+                        <!-- 共有六種狀態 請看下方 popup#point1~6，扣點完成後按鈕文案變「查看扣點紀錄」，收藏品尚未收集完成時按鈕反灰，加 .disabled -->
+                    </button>
+                    <button class="btn-complete disabled" data-fancybox data-src="#point2">
+                        點我完成任務 (收藏品✕，餘額○)
+                    </button>
+                    <button class="btn-complete" data-fancybox data-src="#point3">
+                        點我完成任務 (收藏品○，餘額✕)
+                    </button>
+                    <button class="btn-complete" data-fancybox data-src="#point4">
+                        點我完成任務 (收藏品○，餘額○)
+                    </button>
+                    <button class="btn-complete" data-fancybox data-src="#point5">
+                        點我完成任務 (扣點進行中)
+                    </button>
+                    <button class="btn-complete" data-fancybox data-src="#point6">
+                        查看扣點紀錄 (扣點完成)
+                    </button>
+                    <!------------ 更換小卡 popup ------------>
+                    <div class="dialog notice-dialog no-close" id="exchangeList" style="display: none;">
+                        <div class="dialog-content-wrap">
+                            <div class="notice-dialog-title">選擇收藏品</div>
+                            <div class="dialog-scroll">
+                                <!-- 空版 -->
+                                <template v-if="popupStatus === 0" key="notOwned">
+                                    <div class="nothing-board ic-popup">
+                                        <img src="./img/icon/ic_nothing-board-popup.svg">
+                                        <p>目前無符合條件的收藏品</p>
+                                    </div>
+                                </template>
+                                <!-- 有版 -->
+                                <template v-if="popupStatus === 1" key="owned">
+                                    <template v-for="item in popupCollection">
+                                        <div class="change-card">
+                                            <input type="radio" :id="item.inputId" value="" name="exchangeCard">
+                                            <label class="change-box" :for="item.inputId">
+                                                <div class="mci-img" data-ratio="1" data-size="blackhole-list">
+                                                    <img :src="item.img">
+                                                    <template v-if="item.state === 0" key="uncheck">
+                                                        <div class="ic-checked"></div>
+                                                    </template>
+                                                    <template v-if="item.state === 1" key="checked">
+                                                        <div class="ic-checked used"></div>
+                                                    </template>
+                                                </div>
+                                                <span class="Subhead">{{item.name}}</span>
+                                            </label>
+                                        </div>
+                                    </template>
+                                </template>
+                            </div>
+                        </div>
+                        <button class="dialog-button text-primary" @click="changeConfirm">確定變更</button>
+                    </div>
+                    <!------------ 扣點 popup ------------>
+                    <!-- ↓第一種：收藏品✕，餘額✕ -->
+                    <div class="dialog point-dialog no-close" id="point1" style="display: none;">
+                        <div class="dialog-content-wrap">
+                            <div class="point-dialog-title">點數錢包扣除</div>
+                            <div class="dialog-scroll">
+                                <p class="point-dialog-desc">參與此項任務，您將扣除GASH點數</p>
+                                <h2>50點</h2>
+                                <h6>目前剩餘 GASH 點數：<span>5 點</span></h6>
+                                <div class="point-dialog-notice notice-collection">請先完成收藏品的收集，再進行GASH扣點完成任務！</div>
+                            </div>
+                        </div>
+                        <button class="dialog-button submit" onclick="window.open('#')">立即儲值</button>
+                        <button class="dialog-button cancel" onclick="$.fancybox.close();">我知道了</button>
+                    </div>
+                    <!-- ↓第二種：收藏品✕，餘額○ -->
+                    <div class="dialog point-dialog no-close" id="point2" style="display: none;">
+                        <div class="dialog-content-wrap">
+                            <div class="point-dialog-title">點數錢包扣除</div>
+                            <div class="dialog-scroll">
+                                <p class="point-dialog-desc">參與此項任務，您將扣除GASH點數</p>
+                                <h2>50點</h2>
+                                <h6>目前剩餘 GASH 點數：3,115 點</h6>
+                                <div class="point-dialog-notice notice-collection">請先完成收藏品的收集，再進行GASH扣點完成任務！</div>
+                            </div>
+                        </div>
+                        <button class="dialog-button" onclick="$.fancybox.close();">我知道了</button>
+                    </div>
+                    <!-- ↓第三種：收藏品○，餘額✕ -->
+                    <div class="dialog point-dialog no-close" id="point3" style="display: none;">
+                        <div class="dialog-content-wrap">
+                            <div class="point-dialog-title">點數錢包扣除</div>
+                            <div class="dialog-scroll">
+                                <p class="point-dialog-desc">參與此項任務，您將扣除GASH點數</p>
+                                <h2>50點</h2>
+                                <h6>目前剩餘 GASH 點數：<span>5 點</span></h6>
+                                <div class="point-dialog-notice notice-point">您的點數不足，請儲值足夠點數後再行扣點！</div>
+                            </div>
+                        </div>
+                        <button class="dialog-button submit" onclick="window.open('#')">立即儲值</button>
+                        <button class="dialog-button cancel" onclick="$.fancybox.close();">我知道了</button>
+                    </div>
+                    <!-- ↓第四種：收藏品○，餘額○ -->
+                    <div class="dialog point-dialog no-close" id="point4" style="display: none;">
+                        <div class="dialog-content-wrap">
+                            <div class="point-dialog-title">點數錢包扣除</div>
+                            <div class="dialog-scroll">
+                                <p class="point-dialog-desc">參與此項任務，您將扣除GASH點數</p>
+                                <h2>50點</h2>
+                                <h6>目前剩餘 GASH 點數：3,115 點</h6>
+                                <div class="point-dialog-notice notice-warning">*點數扣除後將先行扣除點數，並於活動日結束當下才結算獎勵</div>
+                                <div class="checkbox">
+                                    <input id="agreement" type="checkbox" v-model="agree">
+                                    <label for="agreement">
+                                        我明白點擊「確認扣除」後將扣除點數且無法返回
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="dialog-button submit" id="show-error" :disabled="!agree" @click="deduct">
+                            <div class="btn-loading" id="deduct-loading" v-show="btnloading"></div>
+                            <span v-show="!btnloading">確認扣除</span>
+                        </button>
+                        <button class="dialog-button cancel" @click="cancelclose">取消</button>
+                    </div>
+                    <!-- ↓第五種：扣點進行中 -->
+                    <div class="dialog point-dialog no-close" id="point5" style="display: none;">
+                        <div class="dialog-content-wrap">
+                            <div class="point-dialog-title">點數錢包扣除</div>
+                            <div class="dialog-scroll">
+                                <p class="point-dialog-desc">參與此項任務，您將扣除GASH點數</p>
+                                <h2>50點</h2>
+                                <div class="point-dialog-notice notice-record">
+                                    <dl>
+                                        <dt>訂單編號</dt>
+                                        <dd>2023041721009399888399</dd>
+                                        <dt>訂單成立時間</dt>
+                                        <dd>扣點進行中，請於10分鐘後再次確認</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="dialog-button" onclick="$.fancybox.close();">我知道了</button>
+                    </div>
+                    <!-- ↓第六種：扣點紀錄 -->
+                    <div class="dialog point-dialog no-close" id="point6" style="display: none;">
+                        <div class="dialog-content-wrap">
+                            <div class="point-dialog-title">點數錢包扣除</div>
+                            <div class="dialog-scroll">
+                                <p class="point-dialog-desc">參與此項任務，您已扣除GASH點數</p>
+                                <h2>50點</h2>
+                                <div class="point-dialog-notice notice-record">
+                                    <dl>
+                                        <dt>訂單編號</dt>
+                                        <dd>2023041721009399888399</dd>
+                                        <dt>訂單成立時間</dt>
+                                        <dd>2023/04/01 23:34:56</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="dialog-button" onclick="$.fancybox.close();">我知道了</button>
+                    </div>
+                    <!-- /dialog notice-dialog no-close -->
+                    <!------------ toast 訊息  ------------>
+                    <div class="error-message" id="error-message" style="display: none;">
+                        <span class="icon"><img src="./img/icon/ic-info-s-secb_o.svg"></span>
+                        <p>儲存失敗，請稍後再試或洽客服詢問。<br>錯誤代碼：2sdsw</p>
+                        <span class="error-hide" id="error-hide"><img src="./img/icon/ic-close-s-dark.png"></span>
+                    </div>
+                    <div class="success-message" id="success-message" style="display: none;">
+                        <span class="icon"><img src="./img/icon/ic-info-s-secb_g.svg"></span>
+                        <p>儲存成功</p>
+                        <span class="success-hide" id="success-hide"><img src="./img/icon/ic-close-s-dark.png"></span>
+                    </div>
+                    <!------------ 活動說明及注意事項 popup ------------>
+                    <div class="dialog notice-dialog no-close" id="notice" style="display: none;">
+                        <div class="dialog-content-wrap">
+                            <div class="notice-dialog-title">活動說明及注意事項</div>
+                            <div class="dialog-scroll">
+                                <img src="./img/mission/notice-img.jpg" class="notice-img">
+                                <ol>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。</li>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。</li>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。</li>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。</li>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、</li>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。</li>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。</li>
+                                    <li>其他未盡事宜，悉依中華民國相關法令辦理。</li>
+                                </ol>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, consequatur!
+                                    Consequuntur vero dolor nostrum, nemo suscipit voluptatum quae numquam, tenetur
+                                    optio expedita earum modi, laborum rerum sapiente voluptates enim dicta.</p>
+                            </div>
+                        </div>
+                        <button class="dialog-button" onclick="$.fancybox.close();">我知道了</button>
+                    </div>
+                </div><!-- /blackhole-box -->
+            </div><!-- /mission-blackhole -->
+        </div>
+    </div>
+    <script src="./js/vue.min.js"></script>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="./js/lottie.min.js"></script>
+    <script>
+        var jQfn = function () {
+            var animation = bodymovin.loadAnimation({
+                container: document.getElementById('dot-loading'),
+                // chrome 禁止直接讀取 local json，這邊要用 local server 才看的到
+                path: './js/json/dot-loading-white.json',
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                name: "Demo Animation",
+            });
+            var deduct = bodymovin.loadAnimation({
+                container: document.getElementById('deduct-loading'),
+                // chrome 禁止直接讀取 local json，這邊要用 local server 才看的到
+                path: './js/json/dot-loading-white.json',
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                name: "Demo Animation",
+            });
+        }
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    btnloading: false,
+                    status: 0,
+                    missionInfo: '透過原子少年盲盒，抽中 浦俊素 10 個即可換得大獎，並有機會抽中超級好禮。透過原子少年盲盒，抽中透過原子少年盲盒，抽中 浦俊素 10 個即可換得大獎，並有機會抽中超級好禮。透過原子透過原子透過原子哈',
+                    title: '位置',
+                    popupStatus: 1,
+                    agree: false,
+
+                    missionCollection: [
+                        {
+                            number: 1,
+                            state: '',
+                            img: '',
+                        }, {
+                            number: 2,
+                            state: 'join',
+                            img: './img/mission/sanrio-2.jpg',
+                        }, {
+                            number: 3,
+                            state: 'join',
+                            img: './img/mission/sanrio-main.jpg',
+                        }, {
+                            number: 4,
+                            state: 'join',
+                            img: './img/mission/sanrio-1.jpg',
+                        }, {
+                            number: 5,
+                            state: 'join',
+                            img: './img/mission/sanrio-2.jpg',
+                        }
+                    ],
+                    popupCollection: [
+                        {
+                            state: 1,
+                            inputId: 'exchange1',
+                            img: './img/mission/sanrio-1.jpg',
+                            name: '這是收藏品的名稱這是收藏品的名稱這是收藏這是收藏品的名稱這是收藏品的名稱這是收藏的名稱的名稱的名稱的',
+                        }, {
+                            state: 0,
+                            inputId: 'exchange2',
+                            img: './img/mission/sanrio-5.jpg',
+                            name: 'NameNameNameN',
+                        }, {
+                            state: 0,
+                            inputId: 'exchange3',
+                            img: './img/mission/sanrio-4.jpg',
+                            name: 'NameNameNameN',
+                        }, {
+                            state: 0,
+                            inputId: 'exchange4',
+                            img: './img/mission/sanrio-main.jpg',
+                            name: 'NameNameNameN',
+                        }, {
+                            state: 0,
+                            inputId: 'exchange5',
+                            img: './img/mission/sanrio-6.jpg',
+                            name: 'NameNameNameN',
+                        }, {
+                            state: 0,
+                            inputId: 'exchange6',
+                            img: './img/mission/sanrio-1.jpg',
+                            name: 'NameNameNameN',
+                        }, {
+                            state: 0,
+                            inputId: 'exchange7',
+                            img: './img/mission/sanrio-2.jpg',
+                            name: 'NameNameNameN',
+                        },
+                    ],
+                }
+            },
+            mounted: function () {
+                this.$nextTick(function () {
+                    //- vm.prizeLoading = false
+                    //- window.setTimeout(function(){
+                    //-     vm.loading = false
+                    //- }, vm.loadingTimer);
+                    jQfn()
+                })
+                // setTimeout(() => {
+                // 	document.getElementById("error-message").style.display="none";
+                //     document.getElementById("success-message").style.display="none";
+                // }, 4000);
+            },
+            methods: {
+                deduct: function () {
+                    vm.btnloading = true;
+                    window.setTimeout(function () {
+                        $.fancybox.close();
+                    }, 3000);
+                    window.setTimeout(function () {
+                        vm.btnloading = false;
+                        vm.agree = false;
+                        $("#error-message").slideDown();
+                    }, 3200);
+                },
+                cancelclose: function () {
+                    vm.agree = false;
+                    $.fancybox.close();
+                },
+                changeConfirm: function () {
+                    $.fancybox.close();
+                    $("#success-message").slideDown();
+                    window.setTimeout(function () {
+                        $("#success-message").slideUp();
+                    }, 3000);
+                }
+            }
+        })
+        // 訊息關閉按鈕
+        $(function () {
+            $("#success-hide").click(function () {
+                $("#success-message").hide();
+            });
+        });
+        $(function () {
+            $("#error-hide").click(function () {
+                $("#error-message").hide();
+            });
+        });
+    </script>
+</body>
+
+</html>

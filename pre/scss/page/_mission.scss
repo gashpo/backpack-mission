@@ -1,0 +1,1986 @@
+@import url("https://fonts.googleapis.com/css2?family=Abel&display=swap");
+
+$missionbgsize-1: calc(6.25 * var(--font-size));
+$missionbgsize-2: calc(54 * var(--font-size));
+$missionbgsize-3: calc(64 * var(--font-size));
+$missionbg-1: radial-gradient(circle, rgba(57, 91, 208, 1) 67.5%, rgba(57, 91, 208, 0) 67.5%, transparent 100%);
+$missionbg-2: radial-gradient(circle, rgba(57, 91, 214, .3) 20%, rgba(57, 91, 214, 0) 20%, transparent 100%);
+$missionbg-3: radial-gradient(circle, rgba(57, 91, 214, .3) 17.7%, rgba(57, 91, 214, 0) 17.7%, transparent 100%);
+
+@mixin missionFontFamily {
+    font-family: "Abel", "PingFangTC", "Microsoft JhengHei";
+}
+
+.line {
+    position: fixed;
+    width: 1px;
+    height: 100vh;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background: red;
+}
+
+.mission,
+.mission-history,
+.mission-blackhole {
+    @include missionFontFamily;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.mission {
+    background-image: url("./../img/mission/page-title-wrap-bg.svg");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+
+    // background-image: $missionbg-1, $missionbg-2, $missionbg-3;
+    // background-color: #182035;
+    // background-size: $missionbgsize-1 $missionbgsize-1, $missionbgsize-2 $missionbgsize-2,
+    //     $missionbgsize-3 $missionbgsize-3;
+    // background-repeat: no-repeat, repeat-y, repeat-y;
+    // background-position: calc(-2.81 * var(--font-size)) calc(-2 * var(--font-size)),
+    //     top calc(0 * var(--font-size)) right calc(-28 * .9 * var(--font-size)),
+    //     top calc(22.3 * var(--font-size)) left calc(-32 * .95 * var(--font-size));
+    .error-message {
+        display: flex;
+        width: calc(100% - calc(1.5 * var(--font-size)));
+        overflow: hidden;
+        margin: 0 auto;
+        @include size(12, padding);
+        box-sizing: border-box;
+        background-color: $bg;
+        border-left: calc(0.6 * var(--font-size)) $bfSecondaryA solid;
+        @include size(12, border-radius);
+        box-shadow: 0px 4px 20px rgba(158, 158, 158, .15);
+        position: fixed;
+        @include size(18, top);
+        left: 0;
+        right: 0;
+        z-index: 99999;
+
+        .icon {
+            width: calc(1.5 * var(--font-size));
+            @include size(2, margin-top);
+            @include size(4, margin-right);
+
+            img {
+                display: block;
+            }
+        }
+
+        p {
+            width: calc(100% - calc(2.3 * var(--font-size)));
+            @include size(14);
+            font-weight: 500;
+            color: $bfDark;
+            line-height: normal;
+        }
+
+        .error-hide {
+            @include size(14, width);
+        }
+    }
+}
+
+.mission-history,
+.mission-blackhole {
+    background-image: unset;
+    flex-grow: 1;
+
+    h2 {
+        color: $bfDark;
+        font-weight: 500;
+        text-align: center;
+        flex-grow: 1;
+        padding: calc(1 * var(--font-size)) 0;
+        // margin-left: calc(-2.5 * var(--font-size));
+    }
+}
+
+.mission-history,
+.mission-blackhole {
+    .page-title-wrap {
+        @include size(6, padding-top);
+        @include size(6, padding-bottom);
+        margin-bottom: 0;
+    }
+
+    .mission-box {
+        padding: 0;
+    }
+}
+
+.page-title-wrap {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: calc(1.9 * var(--font-size)) calc(1.25 * var(--font-size)) calc(1.9 * var(--font-size));
+
+    .history-link,
+    .previous-link {
+        position: absolute;
+        @include size(5, right);
+        @include size(9, top);
+        display: inline-block;
+        @include size(54, width);
+        @include size(54, height);
+        line-height: 1.5;
+        vertical-align: middle;
+        background-image: url("./../img/icon/ic-history-dark.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        @include size(28, background-size);
+    }
+
+    .previous-link {
+        position: relative;
+        z-index: 1;
+        top: calc(.125 * var(--font-size));
+        margin-left: calc(-.5 * var(--font-size));
+        background-image: url("./../img/icon/ic_arrow-down_white.svg");
+
+        &[data-color="dark"] {
+            background-image: url("./../img/icon/ic_arrow-down_dark.svg");
+        }
+
+        &[data-color="white"] {
+            background-image: url("./../img/icon/ic_arrow-down_white.svg");
+        }
+    }
+
+    // &:after {
+    //     content: "";
+    //     position: absolute;
+    //     display: block;
+    //     width: 100%;
+    //     height: calc(1.5 * var(--font-size));
+    //     bottom: 0;
+    //     right: 0;
+    //     background-image: url("./../img/mission/mission-box_bg.svg");
+    //     background-position: top;
+    //     background-repeat: no-repeat;
+    //     background-size: 100% auto;
+    //     z-index: 1;
+    // }
+}
+
+.mission-greeting {
+    @include size(13, padding);
+    @include size(80, padding-right);
+    @include size(9, padding-left);
+    color: $bfDark;
+    font-weight: normal;
+    flex-grow: 0;
+    @include size(22);
+    font-weight: 500;
+    background-image: url("./../img/mission/theme-bg-deco.svg");
+    background-position: right 0 bottom 0;
+    background-repeat: no-repeat;
+    @include size(60, background-size);
+
+    span,
+    p {
+        font-family: inherit;
+        font-weight: inherit;
+        font-size: inherit;
+        display: block;
+        line-height: 1.25;
+        @include size(12, margin-bottom);
+    }
+
+    .mission-greeting-star {
+        display: inline-block;
+        // padding-top: calc(.25 * var(--font-size));
+        // padding-right: calc(1.5 * var(--font-size));
+        // background-image: url("./../img/mission/spark.svg");
+        // background-position: right top;
+        // background-repeat: no-repeat;
+        // background-size: calc(.94 * var(--font-size));
+    }
+}
+
+.mission-box {
+    @include size(18, padding-top);
+    background-color: $bfWhite;
+
+    .mission-tabs {
+        padding: 0 calc(.85 * var(--font-size));
+        @include size(22, margin-bottom);
+        border-bottom: 2px $bfSoftWhite solid;
+
+        .mission-tab-item {
+            display: inline-block;
+            padding: calc(.25 * var(--font-size)) calc(.5 * var(--font-size)) calc(.5 * var(--font-size));
+            @include size(18);
+            color: $bfGray;
+            position: relative;
+            bottom: -2px;
+            cursor: pointer;
+        }
+
+        .active {
+            color: $bfSecondaryB;
+            font-weight: 500;
+            border-bottom: 2px $bfSecondaryB solid;
+        }
+    }
+}
+
+.mission-area {
+    padding: 0 calc(.85 * var(--font-size)) calc(2 * var(--font-size));
+    min-height: 75vh;
+
+    p.mission-txt {
+        // padding: 0 calc(.5 * var(--font-size));
+        @include size(30, margin-bottom);
+        @include size(14);
+        color: $bfDarkGray;
+
+        span {
+            @include size(4, padding-left);
+            @include size(14);
+            font-weight: bold;
+            color: $bfPrimary;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+
+    .btn-primary {
+        width: 60%;
+        margin: calc(2 * var(--font-size)) auto 0;
+    }
+}
+
+.dialog-scroll.sanrio {
+    position: relative;
+}
+
+.nothing-board {
+    width: 100%;
+    margin-top: 20vh;
+    text-align: center;
+
+    &.ic-popup {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        left: 0;
+        transform: translateY(-50%);
+
+        img {
+            @include size(108, width);
+        }
+    }
+
+    img {
+        @include size(72, width);
+        height: auto;
+        @include size(13, margin-bottom);
+    }
+
+    p {
+        @include size(14);
+        color: $bfDarkGray;
+    }
+}
+
+.task-tabs {
+    display: block;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    @include size(11, margin-bottom);
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    ul {
+        white-space: nowrap;
+
+        .chip-tab-item {
+            display: inline-block;
+            max-width: 130px;
+            overflow: hidden;
+            box-sizing: border-box;
+            padding: calc(.1 * var(--font-size)) calc(.4 * var(--font-size));
+            margin: 0 calc(.4 * var(--font-size)) 0 0;
+            @include size(14);
+            color: $bfDarkGray;
+            text-overflow: ellipsis;
+            border: 1px $bfSlightlyGray solid;
+            @include size(8, border-radius);
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            &.active {
+                color: $bfPrimary;
+                border-color: $bfLightPrimary;
+                background-color: #E6FAF4;
+
+            }
+        }
+    }
+}
+
+.mission-wrap {
+    @include size(20, padding);
+    background: $slightlyLightGray;
+    @include size(12, border-radius);
+    @include size(13, margin-bottom);
+    position: relative;
+
+    .tags {
+        padding: calc(.3 * var(--font-size)) calc(.6 * var(--font-size)) calc(.3 * var(--font-size)) calc(1.5 * var(--font-size));
+        // font-size: calc(.65 * var(--font-size));
+        @include size(12);
+        color: $bfDarkGray;
+        font-weight: 500;
+        background-image: url("./../img/icon/ic-undone-dark.svg");
+        background-color: $bfSoftWhite;
+        background-size: calc(.55 * var(--font-size)) auto;
+        @include size(12);
+        line-height: 1.4;
+        @include size(90, border-radius);
+        border: 1px solid $bfLightGray;
+        background-repeat: no-repeat;
+        background-position: center left calc(.5 * var(--font-size));
+        position: absolute;
+        @include size(14, top);
+        @include size(14, right);
+
+        &.finish {
+            color: $bfPrimary;
+            background-color: #E6FAF4;
+            background-image: url("./../img/icon/ic-finish-primary.svg");
+            border-color: #E6FAF4;
+        }
+    }
+
+    .mission-category {
+        @include size(13, margin-bottom);
+        @include size(13);
+        color: $bfMediumGray;
+    }
+
+    .mission-title {
+        color: $bfDark;
+        @include size(18, margin-bottom);
+        @include size(17);
+    }
+
+    .mission-info {
+        display: flex;
+        @include size(18, margin-bottom);
+        justify-content: space-between;
+
+        .mission-info-desc {
+            width: 65%;
+            text-align: justify;
+            color: $bfDarkGray;
+            @include size(14);
+            line-height: 1.6;
+        }
+
+        .mission-info-img {
+            width: 30%;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                @include size(14, border-radius);
+            }
+
+        }
+    }
+
+    .mission-get {
+        display: inline-block;
+        @include size(14, margin-bottom);
+        @include size(14);
+        font-weight: bold;
+        color: $bfPrimary !important;
+        text-decoration: underline;
+    }
+
+    .text-secondaryb {
+        @include size(9, margin-bottom);
+        @include size(14);
+        font-weight: bold;
+        color: $bfSecondaryB;
+    }
+
+    .mission-other {
+        display: flex;
+        justify-content: space-between;
+
+        // margin-bottom: calc(1 * var(--font-size));
+        .mission-date {
+            @include size(14);
+            color: $bfDarkGray;
+        }
+
+        .open {
+            @include size(18, padding-right);
+            @include size(14);
+            color: $bfDark;
+            display: flex;
+            align-items: center;
+            background-image: url("./../img/icon/ic_arrow-downdown_dark.svg");
+            background-size: calc(.5 * var(--font-size)) auto;
+            background-repeat: no-repeat;
+            background-position: top calc(.6 * var(--font-size)) right;
+            cursor: pointer;
+
+            img {
+                @include size(9, padding-left);
+            }
+
+            &.expand {
+                background-image: url("./../img/icon/ic_arrow-upup_dark.svg");
+            }
+        }
+    }
+
+    .mission-collection {
+        display: none;
+        display: flex;
+        flex-wrap: wrap;
+        @include size(18, margin-top);
+
+        .mission-collection-item {
+            width: calc((100% - calc(.89 * var(--font-size))) / 3);
+            @include size(8, margin-right);
+            @include size(16, margin-bottom);
+            box-sizing: border-box;
+            position: relative;
+            background-color: $bg;
+            padding: calc(.44 * var(--font-size)) calc(.22 * var(--font-size));
+            @include size(8, border-radius);
+
+            &:nth-child(3n) {
+                margin-right: 0;
+            }
+
+            .mci-img {
+                width: calc(100% - calc(.89 * var(--font-size)));
+                margin: 0 auto;
+                @include size(8, border-radius);
+
+                img {
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    max-width: 100%;
+                    max-height: 100%;
+                    @include size(8, border-radius);
+                }
+
+                .empty,
+                .add {
+                    background: rgba($bfDark, .8);
+                    color: white;
+                }
+            }
+
+            .mci-count {
+                color: $bfDark;
+                display: table;
+                margin: 0 auto;
+                @include size(14);
+                text-align: center;
+            }
+
+            .mci-name {
+                padding: 0;
+            }
+        }
+    }
+
+    //mission-collection
+    .btn-join {
+        display: block;
+        width: 100%;
+        @include size(9, padding);
+        @include size(20, margin-top);
+        box-sizing: border-box;
+        @include size(15);
+        color: $bg !important;
+        text-align: center;
+        background-color: $bfPrimary;
+        @include size(8, border-radius);
+
+    }
+}
+
+//mission-wrap
+
+.blackhole-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(.67 * var(--font-size)) calc(.44 * var(--font-size));
+
+    .blackhole-wrap {
+        flex: calc(50% - (.22 * var(--font-size)));
+        max-width: calc(50% - (.22 * var(--font-size)));
+        box-sizing: border-box;
+        border: 1px solid $bfSoftWhite;
+        @include size(12, border-radius);
+        @include size(8, padding);
+        position: relative;
+
+        .mci-img {
+            width: 100%;
+            @include size(9, margin-bottom);
+            @include size(12, border-radius);
+
+            img {
+                top: 50%;
+                left: 50%;
+                max-width: 100% !important;
+                max-height: 100%;
+                transform: translate(-50%, -50%);
+                @include size(12, border-radius);
+            }
+
+            .exchange {
+                padding: calc(.1 * var(--font-size)) calc(.7 * var(--font-size));
+                @include size(12);
+                font-weight: 500;
+                color: $bfWhite;
+                @include size(54, border-radius);
+                background-color: $bfPrimary;
+                position: absolute;
+                @include size(12, bottom);
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .blackhole-finish {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                background-color: rgba($bfDark, .8);
+                position: absolute;
+                top: 0;
+                left: 0;
+
+                p {
+                    @include size(15);
+                    font-weight: 500;
+                    color: $bg;
+                }
+            }
+        }
+
+        .blackhole-title {
+            @include size(14);
+            color: $bfDark;
+            text-align: center;
+            display: -webkit-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            @include size(28, margin-bottom);
+        }
+
+        .blackhole-dateline {
+            @include size(12);
+            color: $bfDarkGray;
+            text-align: center;
+            position: absolute;
+            @include size(8, bottom);
+            left: 50%;
+            transform: translateX(-50%);
+            min-width: max-content;
+        }
+
+    }
+
+    .btn-primary {
+        margin: calc(1 * var(--font-size)) auto 0;
+    }
+}
+
+//blackhole-list
+
+
+
+
+
+
+
+.mission-history {
+    .blackhole-area {
+        display: block;
+    }
+
+    .history-wrap {
+        // padding: 0 calc(.3 * var(--font-size)) 0;
+
+        .history-status {
+            @include size(12, margin-bottom);
+            background-color: $veryLightGray;
+            padding: calc(.56 * var(--font-size)) calc(.67 * var(--font-size));
+            @include size(8, border-radius);
+
+            .history-status-list {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                // align-items: center;
+                position: relative;
+
+                .mci-img {
+                    flex: 25%;
+                    max-width: 25%;
+                    height: 25%;
+                    @include size(8, border-radius);
+
+                    img {
+                        top: 50%;
+                        left: 50%;
+                        max-width: 100%;
+                        max-height: 100%;
+                        @include size(8, border-radius);
+                        transform: translate(-50%, -50%);
+                    }
+                }
+
+                .mci-info {
+                    flex: 60%;
+                    margin-left: 3%;
+                    display: flex;
+                    flex-wrap: wrap;
+
+                    .mission-title {
+                        display: -webkit-box;
+                        flex: calc(100% - ((25/18) * var(--font-size)));
+                        overflow: hidden;
+                        @include size(9, margin-bottom);
+                        @include size(14);
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 2;
+                        color: $bfDark;
+                    }
+
+                    .ic-detail {
+                        flex: calc((25/18) * var(--font-size));
+                        @include size(25, width);
+                        @include size(25, height);
+                        background-image: url("./../img/icon/ic-detail.svg");
+                        background-repeat: no-repeat;
+                        background-size: calc(1 * var(--font-size)) auto;
+                        background-position: center;
+                    }
+
+                    .mci-date {
+                        @include size(13);
+                        color: $bfMediumGray;
+                        flex: 1;
+                        min-width: max-content;
+                    }
+
+                    .open {
+                        flex: 20%;
+                        justify-content: flex-end;
+                        position: relative;
+                        min-width: max-content;
+                    }
+                }
+
+                .status {
+                    flex: 1;
+                    display: flex;
+                    justify-content: flex-end;
+                    min-width: max-content;
+
+                    span {
+                        display: inline-flex;
+                        align-items: center;
+                        @include size(8, margin-left);
+                        line-height: 1.4;
+                        padding: calc(.22 * var(--font-size)) calc(.67 * var(--font-size));
+                        @include size(12);
+                        @include size(14, line-height);
+                        font-weight: 500;
+                        color: $bfWhite;
+                        background-color: $bfGray;
+                        @include size(54, border-radius);
+
+                        &.finish {
+                            color: $bfPrimary;
+                            background-color: #E6FAF4;
+                        }
+                    }
+                }
+            }
+
+            .open {
+                @include size(13, padding-right);
+                @include size(13);
+                font-weight: 500;
+                color: $bfPrimary;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                display: flex;
+                align-items: center;
+                background-image: url("./../img/icon/ic_arrow-downdown_primary.svg");
+                background-size: calc(.5 * var(--font-size)) auto;
+                background-repeat: no-repeat;
+                background-position: center right;
+                cursor: pointer;
+
+                img {
+                    @include size(4, margin-left);
+                }
+
+                &.expand {
+                    background-image: url("./../img/icon/ic_arrow-upup_primary.svg");
+
+                }
+            }
+        }
+
+        .blackhole-collection {
+            display: flex;
+            flex-wrap: wrap;
+            gap: calc(.67 * var(--font-size)) calc(.22 * var(--font-size));
+            @include size(10, padding-top);
+
+            .mission-collection-item {
+                flex: calc((100% - (.67 * var(--font-size)))/4);
+                max-width: calc((100% - (.67 * var(--font-size)))/4);
+                background-color: $bg;
+                @include size(8, border-radius);
+                padding: calc(.4 * var(--font-size)) calc(.3 * var(--font-size));
+
+                .mci-img {
+                    @include size(4, margin-bottom);
+
+                    img {
+                        top: 50%;
+                        left: 50%;
+                        max-width: 100%;
+                        max-height: 100%;
+                        transform: translate(-50%, -50%);
+                        @include size(8, border-radius);
+                    }
+                }
+
+                .mci-name {
+                    @include size(12);
+
+                    span {
+                        @include size(12);
+                        display: inline-block;
+                    }
+                }
+            }
+
+            // .mci-card {
+            //     width: calc(100% / 4 - calc(.4 * var(--font-size)));
+            //     height: 0;
+            //     padding-top: calc(100% / 4 - calc(.4 * var(--font-size)));
+            //     margin: 0 calc(.2 * var(--font-size)) calc(.4 * var(--font-size));
+            //     overflow: hidden;
+            //     background-color: $bfMediumGray;
+            //     border-radius: calc(.75 * var(--font-size));
+            //     position: relative;
+
+            //     img {
+            //         position: absolute;
+            //         top: 0;
+            //         left: 0;
+            //         width: 100% !important;
+            //         height: auto;
+            //     }
+            // }
+        }
+
+        //blackhole-collection
+    }
+
+    //history-wrap
+}
+
+//mission-history
+
+
+
+
+
+
+
+.mission-blackhole {
+    background-color: $bfSoftWhite;
+
+    h2 {
+        padding: calc(1 * var(--font-size)) 0 calc(.6 * var(--font-size));
+    }
+
+    .blackhole-box {
+        padding: 0 calc(1.11 * var(--font-size)) calc(7 * var(--font-size));
+
+        .ai-center {
+            border-bottom: 1px solid $bfLightGray;
+            @include size(32, padding-bottom);
+            @include size(32, margin-bottom);
+        }
+    }
+
+    .mission-info-img {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        width: 35%;
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            @include size(12, border-radius);
+        }
+    }
+
+    .Body4 {
+        margin: calc(.89 * var(--font-size)) 0 calc(.89 * var(--font-size));
+        color: $bfDark;
+    }
+
+    .mission-get {
+        display: inline-block;
+        @include size(14);
+        font-weight: bold;
+        color: $bfPrimary !important;
+        text-decoration: underline;
+    }
+
+    .txt {
+        @include size(16);
+        font-weight: 500;
+        color: $bfDark;
+    }
+
+    .note {
+        padding: calc(.75 * var(--font-size)) calc(2 * var(--font-size)) calc(1 * var(--font-size));
+        @include size(14);
+        color: $bfDanger;
+        text-align: center;
+        line-height: 1.6;
+    }
+
+    .mission-step-title {
+        @include size(14);
+        font-weight: 700;
+        color: $bfDark;
+        @include size(2, margin-bottom);
+
+        span {
+            float: right;
+            @include size(14);
+            font-weight: 400;
+            color: $bfDarkGray;
+
+            &.warning {
+                color: $bfDanger;
+            }
+        }
+    }
+
+    .mission-collection {
+        display: flex;
+        flex-wrap: wrap;
+        margin: calc(.78 * var(--font-size)) 0 calc(.89 * var(--font-size));
+
+        .mission-collection-item {
+            width: calc((100% - calc(.89 * var(--font-size))) / 3);
+            margin: 0 calc(.44 * var(--font-size)) calc(.89 * var(--font-size)) 0;
+            padding: calc(.44 * var(--font-size)) calc(.22 * var(--font-size));
+            text-align: center;
+            background-color: $bg;
+            @include size(8, border-radius);
+
+            &:nth-child(3n) {
+                margin-right: 0;
+            }
+
+            .mci-img {
+                width: calc(100% - (1.56 * var(--font-size)));
+                margin: 0 auto calc(.5 * var(--font-size));
+                background-image: url("./../img/icon/ic-add-gray.svg");
+                @include size(14, background-size);
+                background-position: center;
+                background-repeat: no-repeat;
+                @include size(8, border-radius);
+
+                &.history-unselected {
+                    background-image: none;
+
+                    p {
+                        position: absolute;
+                        top: 50%;
+                        left: 0;
+                        right: 0;
+                        margin: auto;
+                        @include size(13);
+                        color: $bfDarkGray;
+                        font-weight: 500;
+                        text-align: center;
+                        transform: translateY(-50%);
+                    }
+
+                    .add {
+                        @include size(13);
+                    }
+                }
+
+                img {
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    max-width: 100%;
+                    max-height: 100%;
+                    @include size(8, border-radius);
+                }
+
+                .ic-fresh {
+                    @include size(28, width);
+                    @include size(28, height);
+                    background-image: url("./../img/icon/ic-fresh-c-primary.svg");
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    @include size(28, background-size);
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    z-index: 1;
+                }
+
+                .empty,
+                .add {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    margin: auto;
+                    z-index: 1;
+                }
+
+                .empty {
+                    @include size(13);
+                    color: $bg;
+                    background: rgba($bfDark, .8);
+                    font-weight: 400;
+                }
+
+                .add {
+                    @include size(24);
+                    color: $bfDarkGray;
+                    background: $bfSoftWhite;
+                    font-weight: 500;
+                }
+            }
+
+            .mci-count {
+                color: $bfDark;
+                @include size(14);
+                font-weight: 500;
+            }
+
+            .mci-name {
+                @include size(13);
+            }
+        }
+    }
+
+    .checkbox {
+        display: table;
+        margin: calc(.75 * var(--font-size)) auto calc(2 * var(--font-size));
+
+        label {
+            padding: 0;
+            background: none;
+
+            &:before {
+                background-color: transparent;
+            }
+        }
+
+        span {
+            @include size(14);
+            font-weight: bold;
+            color: $bfPrimary;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+
+    .flex-btn {
+        width: 100%;
+        padding: calc(1 * var(--font-size)) 0 calc(1.5 * var(--font-size));
+        background-color: $bfWhite;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        box-shadow: 0px 4px 20px rgba(158, 158, 158, .15);
+        z-index: 1;
+        border-radius: calc(.89 * var(--font-size)) calc(.89 * var(--font-size)) 0 0;
+
+        .gash-info {
+            display: block;
+            margin: 0 auto calc(.44 * var(--font-size));
+            text-align: center;
+            @include size(14);
+            font-weight: 400;
+            color: $bfDarkGray;
+
+            span {
+                @include size(14);
+                font-weight: 400;
+                color: $bfPrimary;
+            }
+        }
+
+        .btn-primary {
+            width: calc(100% - 2.22 * var(--font-size));
+            @include size(44, height);
+            margin: calc(1 * var(--font-size)) auto;
+
+            &.disabled {
+                background-color: $bfLightGray;
+            }
+        }
+    }
+
+    .error-message {
+        display: flex;
+        width: calc(100% - calc(1.5 * var(--font-size)));
+        overflow: hidden;
+        margin: 0 auto;
+        @include size(13, padding);
+        box-sizing: border-box;
+        background-color: $bg;
+        border-left: calc(.6 * var(--font-size)) $bfSecondaryA solid;
+        @include size(13, border-radius);
+        box-shadow: 0px 4px 20px rgba(158, 158, 158, .15);
+        position: fixed;
+        @include size(18, top);
+        left: 0;
+        right: 0;
+        z-index: 1;
+
+        .icon {
+            @include size(28, width);
+            @include size(2, margin-top);
+            @include size(4, margin-right);
+
+            img {
+                display: block;
+            }
+        }
+
+        p {
+            width: calc(100% - calc(2.3 * var(--font-size)));
+            @include size(14);
+            font-weight: 500;
+            color: $bfDark;
+            line-height: normal;
+        }
+
+        .error-hide {
+            @include size(14, width);
+        }
+    }
+
+    .success-message {
+        display: flex;
+        align-items: center;
+        width: calc(100% - calc(1.5 * var(--font-size)));
+        overflow: hidden;
+        margin: 0 auto;
+        @include size(13, padding);
+        box-sizing: border-box;
+        background-color: $bg;
+        border-left: calc(.6 * var(--font-size)) $bfPrimary solid;
+        @include size(13, border-radius);
+        box-shadow: 0px 4px 20px rgba(158, 158, 158, .15);
+        position: fixed;
+        top: calc(1 * var(--font-size));
+        left: 0;
+        right: 0;
+        z-index: 1;
+
+        .icon {
+            @include size(28, width);
+            @include size(4, margin-right);
+
+            img {
+                display: block;
+            }
+        }
+
+        p {
+            width: calc(100% - calc(2.3 * var(--font-size)));
+            @include size(14);
+            font-weight: 500;
+            color: $bfDark;
+            line-height: normal;
+        }
+
+        .success-hide {
+            @include size(14, width);
+        }
+    }
+}
+
+//mission-blackhole
+
+
+
+
+
+
+
+
+.mission-content {
+    background-color: $bfSoftWhite;
+
+    .mission-content-img {
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        box-sizing: border-box;
+        padding-top: 56%;
+        @include size(23, margin-bottom);
+        position: relative;
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+
+    .mission-content-status {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        @include size(7, margin-bottom);
+
+        .tags {
+            display: inline-block;
+            // width: 70px;
+            padding: calc(.15 * var(--font-size)) calc(.65 * var(--font-size)) calc(.15 * var(--font-size)) calc(1.2 * var(--font-size));
+            @include size(9, margin-right);
+            box-sizing: border-box;
+            @include size(12);
+            @include size(17, line-height);
+            color: $bfDarkGray;
+            font-weight: 500;
+            background-image: url("./../img/icon/ic-undone-dark.svg");
+            background-color: $bfSoftWhite;
+            background-size: calc(.55 * var(--font-size)) auto;
+            border: 1px solid $bfLightGray;
+            @include size(90, border-radius);
+            background-repeat: no-repeat;
+            background-position: center left calc(.5 * var(--font-size));
+
+            &.finish {
+                color: $bfPrimary;
+                border-color: #E6FAF4;
+                background-color: #E6FAF4;
+                background-image: url("./../img/icon/ic-finish-primary.svg");
+            }
+        }
+
+        p {
+            @include size(12);
+            color: $bfDarkGray;
+        }
+    }
+
+    .mission-content-info {
+        @include size(40, margin-bottom);
+        @include size(14);
+        color: $bfDark;
+
+        span {
+            display: table;
+            @include size(7, margin-top);
+            @include size(14);
+            font-weight: bold;
+            color: $bfPrimary;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+
+    .mission-step-title {
+        margin-bottom: calc(.8 * var(--font-size));
+        font-size: calc(.8 * var(--font-size));
+        font-weight: bold;
+        color: $bfDark;
+
+        span {
+            margin-right: calc(.4 * var(--font-size));
+            font-size: calc(.8 * var(--font-size));
+        }
+    }
+
+    .mission-collection {
+        @include size(22, margin-bottom);
+
+        .mission-collection-item {
+            @include size(8, padding);
+
+            &.row-3 {
+                width: calc((100% - calc(1.33 * var(--font-size))) / 3);
+                margin-right: calc(.66 * var(--font-size));
+
+                &:nth-child(3n) {
+                    margin-right: 0;
+                }
+            }
+
+            &.row-4 {
+                &:nth-child(3n) {
+                    margin-right: calc(.66 * var(--font-size));
+                }
+
+                &:nth-child(4n) {
+                    margin-right: 0;
+                }
+
+                .mci-tags {
+                    padding: calc(.1 * var(--font-size)) 0;
+                    @include size(4, margin-bottom);
+                    @include size(11);
+                    font-weight: 500;
+                    color: $bfDarkGray;
+                    text-align: center;
+                    background-color: $bfSoftWhite;
+                    @include size(5, border-radius);
+                }
+            }
+
+            .mci-tags {
+                @include size(12);
+                color: $bfMediumGray;
+                line-height: 1.4;
+                @include size(4, margin-bottom);
+            }
+
+            .mci-img {
+                margin-bottom: 0;
+                width: calc(100% - (1.33 * var(--font-size)));
+
+                // .add {
+                //     background-color: rgba($bfDark, .8);
+                //     color: $bg;
+                // }
+            }
+
+            .mci-name {
+                @include size(12);
+                @include size(4, margin-top);
+                padding: 0;
+            }
+
+            &.step1 {
+                .mci-img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+//mission-content
+
+
+
+
+
+
+
+
+.mission-area {
+    .btn-more {
+        display: block;
+        margin: 0 auto;
+        color: $bfDarkGray;
+        background: none;
+        border: none;
+
+        span {
+            display: block;
+            padding: calc(.5 * var(--font-size)) 0 calc(1 * var(--font-size));
+            @include size(14);
+            background-image: url("./../img/icon/ic_arrow-downdown_gray.svg");
+            background-size: calc(.6 * var(--font-size)) auto;
+            background-repeat: no-repeat;
+            background-position: bottom center;
+        }
+    }
+
+    .gash-info {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+        @include size(14);
+        font-weight: 400;
+        color: $bfDarkGray;
+
+        span {
+            @include size(14);
+            font-weight: 400;
+            color: $bfPrimary;
+        }
+    }
+
+    .btn-complete {
+        display: block;
+        width: 100%;
+        @include size(42, height);
+        padding: calc(.5 * var(--font-size)) calc(1.33 * var(--font-size));
+        @include size(8, margin-top);
+        box-sizing: border-box;
+        @include size(16);
+        line-height: 1.4;
+        color: $bg;
+        background-color: $bfPrimary;
+        @include size(8, border-radius);
+        border: none;
+        font-weight: 500;
+
+        &.disabled {
+            background-color: $bfLightGray;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+.mci-img {
+    overflow: hidden;
+    position: relative;
+
+    &:before {
+        content: '';
+        display: block;
+        padding-top: 100%;
+    }
+
+    img {
+        position: absolute;
+        border: none !important;
+    }
+
+    .empty,
+    .add {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .empty {
+        @include size(13);
+    }
+
+    .add {
+        @include size(24);
+    }
+}
+
+.mci-name {
+    display: -webkit-box;
+    width: 100%;
+    padding: 0 calc(.25 * var(--font-size));
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: pre-wrap;
+    text-align: center;
+    @include size(13);
+    color: $bfMediumGray;
+    line-height: 1.5;
+}
+
+// 任務用的注意事項按鈕
+.mission-btn-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include size(14);
+    color: $bfSecondaryB;
+    background: transparentize($bfSecondaryB, .9);
+    @include size(6, padding);
+    @include size(6, margin-bottom);
+    @include size(6, border-radius);
+    border: unset;
+    outline: unset;
+
+    img {
+        @include size(18, width);
+        @include size(4, margin-right);
+    }
+}
+
+// loading畫面
+.page-loading {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(#2B3843, .85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .btn-loading {
+        transform: scale(4);
+    }
+
+    ul {
+        text-align: center;
+        @include size(20, padding-bottom);
+        display: flex;
+        gap: 7px;
+
+        li {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: $bfPrimary;
+            animation: loading 1.5s ease-in-out infinite;
+            margin-right: 0;
+
+            &:nth-child(2) {
+                animation-delay: .3s;
+            }
+
+            &:last-child {
+                animation-delay: .6s;
+            }
+        }
+
+        @keyframes loading {
+            0% {}
+
+            15% {
+                transform: scale(0);
+            }
+
+            30% {
+                transform: scale(1);
+            }
+        }
+    }
+}
+
+// popup 用
+.notice-dialog {
+    &.dialog {
+        display: flex;
+        flex-direction: column;
+        max-height: calc(532 / 16 * var(--font-size));
+        height: 100%;
+
+        &.fancybox-content {
+            padding: calc(1.25 * var(--font-size)) calc(.5 * var(--font-size)) calc(1 * var(--font-size));
+        }
+
+        .notice-dialog-title {
+            @include size(22, padding-bottom);
+            line-height: 1.6;
+            @include size(17);
+        }
+
+        .dialog-content-wrap {
+            display: flex;
+            flex-direction: column;
+            height: 90%;
+            align-items: center;
+            // padding: calc(1 * var(--font-size)) 0;
+            padding: 0;
+        }
+
+        .dialog-scroll {
+            // max-height: calc( 100vh -  (  7.5 * var(--font-size)) );
+            -webkit-overflow-scrolling: auto;
+            flex-grow: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            padding: 0 calc(.5 * var(--font-size));
+            @include size(15);
+            display: flex;
+            flex-wrap: wrap;
+            gap: calc(.89 * var(--font-size)) calc(.67 * var(--font-size));
+
+            &,
+            * {
+                @include size(15);
+                @include missionFontFamily;
+            }
+
+            &+.dialog-button {
+                position: relative;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: 1px;
+                    left: 0;
+                    right: 0;
+                    margin: auto;
+                    display: block;
+                    @include size(54, height);
+                    @include size(-54, margin-top);
+                    background: linear-gradient(0deg, rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 0) 100%);
+                }
+            }
+
+            img.notice-img {
+                display: block;
+                width: 100%;
+                height: auto;
+                @include size(22, margin-bottom);
+            }
+        }
+
+        .dialog-button {
+            display: block;
+            width: 100%;
+            padding: calc(1.2 * var(--font-size)) calc(.5 * var(--font-size)) 0;
+            // margin-top: calc(.25 * var(--font-size));
+            background: unset;
+            outline: unset;
+            border: unset;
+            color: $bfPrimary;
+            @include size(15);
+            font-weight: 500;
+
+            &[disabled="disabled"] {
+                color: $bfLightGray !important;
+                cursor: not-allowed;
+            }
+        }
+    }
+}
+
+.point-dialog {
+    &.dialog {
+        font-family: 'PingFang TC', 'Noto Sans TC', sans-serif;
+        display: flex;
+        flex-direction: column;
+        max-height: calc(532 / 16 * var(--font-size));
+        padding: calc(.78 * var(--font-size)) calc(1.33 * var(--font-size)) calc(1.11 * var(--font-size));
+
+        .dialog-content-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            // padding: calc(1 * var(--font-size)) 0;
+
+            .dialog-scroll {
+                width: 100%;
+            }
+        }
+
+        .point-dialog-title {
+            @include size(36, margin-bottom);
+            @include size(15);
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .point-dialog-desc {
+            @include size(15);
+            @include size(20, line-height);
+            color: $bfDarkGray;
+            text-align: left;
+        }
+
+        h2 {
+            font-family: 'PingFang TC', 'Noto Sans TC', sans-serif;
+            text-align: center;
+            @include size(34);
+            line-height: 1.4;
+            color: $bfSecondaryA;
+            margin: calc(1.33 * var(--font-size)) auto;
+        }
+
+        h6 {
+            font-family: 'PingFang TC', 'Noto Sans TC', sans-serif;
+            @include size(14);
+            line-height: 1.4;
+            color: $bfDarkGray;
+
+            span {
+                color: $bfSecondaryA;
+            }
+        }
+
+        .point-dialog-notice {
+            @include size(12, border-radius);
+            @include size(12, padding);
+            @include size(14);
+            margin: calc(1.33 * var(--font-size)) 0 calc(.67 * var(--font-size));
+
+            &.notice-collection {
+                background-color: rgba($bfPrimary, .15);
+                color: $bfDarkPrimary;
+            }
+
+            &.notice-point {
+                background-color: rgba($bfSecondaryA, .15);
+                color: #DB8307;
+            }
+
+            &.notice-warning {
+                padding: 0;
+                margin: calc(1.33 * var(--font-size)) 0;
+                color: $bfSecondaryB;
+                font-weight: 700;
+            }
+
+            &.notice-record {
+                background-color: $bfSoftWhite;
+                color: $bfDarkGray;
+
+                dl {
+                    display: flex;
+                    flex-wrap: wrap;
+                    @include size(10, gap);
+
+                    dt {
+                        flex: 100%;
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
+
+        .checkbox {
+            display: table;
+            margin: calc(.75 * var(--font-size)) auto;
+
+            label {
+                padding: 0;
+                background: none;
+            }
+
+            span {
+                @include size(14);
+                font-weight: bold;
+                color: $bfPrimary;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+
+        .dialog-button {
+            display: block;
+            width: 100%;
+            padding: 0;
+            @include size(24, margin-top);
+            background: unset;
+            outline: unset;
+            border: unset;
+            color: $bfPrimary;
+            @include size(15);
+            line-height: 1.6;
+
+            &.submit,
+            &.cancel {
+                @include size(8, border-radius);
+                @include size(16);
+                line-height: 1.4;
+                @include size(10, padding);
+                @include size(12, margin-top);
+            }
+
+            &.submit {
+                background-color: $bfPrimary;
+                color: $bfWhite;
+
+                &[disabled="disabled"] {
+                    background-color: $bfLightGray !important;
+                    color: $bfWhite !important;
+                    cursor: not-allowed;
+                }
+            }
+
+            &.cancel {
+                border: 1px solid $bfPrimary;
+            }
+
+            .btn-loading {
+                @include size(22, height);
+                transform: scale(1.6) translateY(1px);
+            }
+        }
+
+        &-blackhole-point {
+            h6 {
+                @include size(12, margin-bottom);
+            }
+        }
+    }
+}
+
+// 黑洞任務
+.black-hole {
+    padding: 0 calc(1.875 * var(--font-size));
+    @include size(136, padding-bottom);
+    align-items: center;
+
+    .mission-collection-item {
+        @include size(22, padding-bottom);
+    }
+
+    .mci-img {
+        @include size(18, border-radius);
+    }
+
+    .page-title-wrap {
+        padding: 0;
+        @include size(9, padding-top);
+        position: relative;
+
+        h2 {
+            text-align: center;
+            flex-grow: 1;
+            padding: calc(1 * var(--font-size)) 0;
+            @include size(-44, margin-left);
+        }
+    }
+}
+
+// 警語
+.hint {
+    @include size(14);
+
+    &[data-type="danger"] {
+        color: $bfDanger;
+        @include size(22);
+        background-image: url("./../img/icon/ic-info-s-danger.svg");
+        background-repeat: no-repeat;
+        @include size(18, background-size);
+        background-position: top calc(.35 * var(--font-size)) left 0;
+    }
+}
+
+.fixed-btn-wrap {
+    box-shadow: 0px 4px 20px rgba(158, 158, 158, .15);
+    z-index: 2;
+}
+
+// 黑洞任務 更換小卡
+.change-card {
+    width: calc(100% / 2 - (.34 * var(--font-size)));
+    @include size(8, padding);
+    box-sizing: border-box;
+    border: 1px solid $bfSoftWhite;
+    @include size(8, border-radius);
+
+    label.change-box {
+        // border-radius: calc(1 * var(--font-size));
+        // border-style: solid;
+        // border-width: calc(.063 * var(--font-size));
+        // border-color: $bfSoftWhite;
+        @include size(9, margin-bottom);
+        padding: 0;
+        height: 100%;
+    }
+
+    .mci-img {
+        width: 100%;
+        margin: 0 0 calc(.5 * var(--font-size));
+        @include size(8, border-radius);
+
+        img {
+            top: 50%;
+            left: 50%;
+            max-width: 100%;
+            max-height: 100%;
+            @include size(8, border-radius);
+            transform: translate(-50%, -50%);
+        }
+
+        .ic-checked {
+            @include size(28, width);
+            @include size(28, height);
+            display: block;
+            @include size(54, border-radius);
+            background-color: $bfSoftWhite;
+            position: absolute;
+            @include size(9, top);
+            @include size(9, right);
+            opacity: 0;
+
+            &.selection {
+                opacity: 1;
+            }
+
+            &.used {
+                @include size(58, width);
+                @include size(28, height);
+                @include size(8, bottom);
+                top: auto;
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
+                color: $bg;
+                background-color: $bfPrimary;
+                background-image: url("./../img/icon/ic-used.svg");
+                background-size: calc(1.8 * var(--font-size)) auto;
+                background-repeat: no-repeat;
+                background-position: center;
+                opacity: 1;
+            }
+        }
+    }
+
+    .Subhead2 {
+        width: 100%;
+        margin: 0 auto;
+        box-sizing: border-box;
+        font-size: calc(.67 * var(--font-size)) !important;
+        font-weight: 400;
+        color: $bfMediumGray;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .Subhead {
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        margin: 0 auto;
+        box-sizing: border-box;
+        font-size: calc(.67 * var(--font-size)) !important;
+        font-weight: 400;
+        color: $bfMediumGray;
+    }
+
+
+
+    input {
+        display: none;
+
+        &:checked {
+            &+label {
+                .mci-img {
+                    background-color: rgba($bfDark, .8);
+
+                    img {
+                        filter: brightness(.5);
+                    }
+                }
+
+                .ic-checked {
+                    opacity: 1;
+                    background-image: url("./../img/icon/ic-checked-c-primary.svg");
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    @include size(28, background-size);
+                }
+
+                .Subhead2,
+                .Subhead {
+                    color: $bfPrimary;
+                }
+            }
+        }
+    }
+
+    .selection {
+        display: block;
+        @include size(28, width);
+        @include size(28, height);
+        @include size(22, border-radius);
+        position: absolute;
+        @include size(9, bottom);
+        @include size(9, left);
+        background-image: url("./../img/icon/ic-checked-c-primary.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        @include size(28, background-size);
+    }
+}
+
+.success-bg-wrap {
+    margin: 0 calc(-1.5 * var(--font-size));
+}
+
+.mission-prize-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    overflow: hidden;
+    margin: 0 auto;
+    @include size(16, margin-bottom);
+    background: $bfLightGray;
+    @include size(14, border-radius);
+    text-align: center;
+    z-index: 1;
+
+    img {
+        width: 100%;
+        margin: auto;
+        object-fit: cover;
+    }
+}
+
+.mission-tab-item div {
+    color: $bfGray;
+}
+
+.active div {
+    color: $bfSecondaryB;
+}

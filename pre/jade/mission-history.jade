@@ -1,0 +1,169 @@
+extends ./template/_pageTemplate.jade
+
+block title 
+    | 少年任務
+
+block content 
+    //- .line
+    .mission-history.animated.fadeIn
+        .page-title-wrap.mb-xxs
+            a.previous-link(href="./mission.html")
+            h2 歷史紀錄
+        //- // 任務一
+        //- .mission-wrap
+        //-     .mission-status
+        //-         .mission-category 原子少年
+        //-         .mission-date 2022/01/03 ~ 2022/02/03
+        //-     h3.mission-title 擁有同少年 5 張數位收藏品
+        //-     .mission-info
+        //-         p.mission-info-desc 透過原子少年盲盒，抽中 浦俊素 10 個即可換得大獎，並有機會抽中超級好禮。透過原子少年盲盒，抽中透過原子少年盲盒，抽中 浦俊素 10 個即可換得大獎，並有機會抽中超級好禮。透過原子透過原子透過原子哈
+        //-         .mission-info-img
+        //-             img(src="./img/mission/mission-theme-1.png", alt="")
+        //-     .progress(data-status="history")
+        //-         .bar(data-current="60")
+        //-         .milestone(data-pos="20" data-status="done") 
+        //-             .milestone-circle
+        //-             .milestone-text 2個
+        //-         .milestone(data-pos="40" data-status="done") 
+        //-             .milestone-circle
+        //-             .milestone-text 4個
+        //-         .milestone(data-pos="50" data-status="done") 
+        //-             .milestone-circle
+        //-             .milestone-text 5個
+        //-         .milestone(data-pos="80") 
+        //-             .milestone-circle
+        //-             .milestone-text 8個
+        //-         .milestone(data-pos="100") 
+        //-             .milestone-circle
+        //-             .milestone-text 10個
+
+        //-     .d-flex.jc-between.mb-xs
+        //-         span.text-dark.caption2-M 已結束
+        //-         .text-dark.mission-expand(@click="mission = !mission" :data-expand="!mission") 
+        //-             template(v-if="mission")
+        //-                 span.caption2 展開
+        //-             template(v-else)
+        //-                 span.caption2 收合
+        //-             img(src="./img/icon/ic_arrow-down_dark.png", alt="")
+        //-     .mission-detail 
+        // 任務二
+        .mission-wrap
+            .mission-status
+                .mission-category 原子少年
+                .mission-date 2022/01/03 ~ 2022/02/03
+            h3.mission-title 擁有同少年 5 張數位收藏品
+            .mission-info
+                p.mission-info-desc 擁有同少年 5 張數位收藏品，有機會獲得原子少年週邊商品  (團體合照不認列，雙人 CP合照認列)最多可兌換 5 次
+                .mission-info-img
+                    img(src="./img/mission/mission-theme-1.png", alt="")
+
+            .mission-collection 
+                - for (var i = 1; i < 6; ++i) {
+                    // 商品收集紀錄
+                    .mission-collection-item 
+                        .mci-img 
+                            img(src="", alt="")
+                        span.mci-count= i + '/5'
+                        span.mci-name= '少年' + i
+                    //- - if (i == 1) {
+                - }
+            p.text-dark.caption2-M.mb-lg 已結束
+            .mission-btn-info(data-fancybox data-src="#notice")
+                img(src="img/icon/ic-info-s-secb.svg", alt="")
+                |點我查看注意事項
+        // 任務三
+        .mission-wrap
+            .mission-status
+                .mission-category 原子少年
+                .mission-date 2022/01/03 ~ 2022/02/03
+            h3.mission-title 擁有 10 張以上不同少年
+            .mission-info
+                p.mission-info-desc 擁有 10 張以上不同少年數位收藏品，有機會享有演唱會折扣或搶先購買資格
+                .mission-info-img
+                    img(src="./img/mission/mission-theme-1.png", alt="")
+
+            .mission-collection 
+                - for (var i = 1; i < 11; ++i) {
+                    // 商品收集紀錄
+                    .mission-collection-item 
+                        .mci-img 
+                            img(src="", alt="")
+                        span.mci-count= i + '/5'
+                        span.mci-name= '少年' + i
+                - }
+            p.text-dark.caption2-M.mb-lg 已結束
+            .mission-btn-info(data-fancybox data-src="#notice")
+                img(src="img/icon/ic-info-s-secb.svg", alt="")
+                |點我查看注意事項
+
+        // 注意事項跳窗
+        #notice.dialog.notice-dialog.no-close(style="display: none;")
+            .dialog-content-wrap
+                .notice-dialog-title 注意事項
+                .dialog-scroll
+                    ol 
+                        li 其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。
+                        li 其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。
+                        li 其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。
+                        li 其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。
+                        li 其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、
+                        li 其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。
+                        li 其他未盡事宜，悉依中華民國相關法令辦理。樂點股份有限公司保留隨時修改、變更、終止本活動與替換其他等值贈品之權利。
+                        li 其他未盡事宜，悉依中華民國相關法令辦理。
+                    p Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, consequatur! Consequuntur vero dolor nostrum, nemo suscipit voluptatum quae numquam, tenetur optio expedita earum modi, laborum rerum sapiente voluptates enim dicta.
+                button.dialog-button(onclick="$.fancybox.close();") 我知道了
+
+block js 
+    script.
+
+        var jQfn = function (){
+            //- var animation = bodymovin.loadAnimation({
+            //-     container: document.getElementById('dot-loading'),
+            //-     // chrome 禁止直接讀取 local json，這邊要用 local server 才看的到
+            //-     path: './js/json/dot-loading-white.json',
+            //-     renderer: 'svg',
+            //-     loop: true,
+            //-     autoplay: true,
+            //-     name: "Demo Animation",
+            //- });
+        }
+
+
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    mission: false
+                }
+            },
+            watch: {
+                activeTab: function() {
+                },
+            },
+            mounted: function () {
+                this.$nextTick(function () {
+                    window.setTimeout(function(){
+                        vm.loading = false
+                    }, vm.loadingTimer);
+                    jQfn()
+                })
+            },
+            methods: {
+                expandDetail: function (id){
+                    vm[name] = !vm[name]
+                }
+            },
+            mounted: function () {
+                this.$nextTick(function () {
+                    window.setTimeout(function(){
+                        vm.loading = false
+                    }, vm.loadingTimer);
+                    jQfn()
+                })
+            },
+            updated: function () {
+                this.$nextTick(function () {
+                    jQfn()
+                })
+            }
+        })

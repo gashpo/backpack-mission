@@ -1,0 +1,120 @@
+extends ./template/_pageTemplate.jade
+
+block title 
+    | 黑洞任務
+
+block content 
+    .black-hole.animated.fadeIn
+        .page-title-wrap
+            a.previous-link(data-color="dark" href="./mission.html")
+            h2 兌換獎勵
+        .column.ai-center.pt-sm
+            .mission-info-img.mb-md
+                img(src="./img/mission/mission-theme-1.png" alt="")
+            h2.Subhead1-M.t-c.mb-sm 兌換收藏品來獲得獎勵
+            p.t-c.Body4.mb-lg 原子少年人形公仔限量版一隻 20 字示意
+            .mission-collection 
+                - for (var i = 1; i < 41; ++i) {
+                    // 商品收集紀錄
+                    - if (i === 6 ) {
+                        .mission-collection-item(data-fancybox data-src="#exchangeList")
+                            .mci-img 
+                                img(src="./img/mission/mission-theme-1.png" alt="")
+                            .mci-status
+                                .ic-fresh
+                            span.mci-name= '少年'+i +'的文字長度'
+                    -} else {
+                        .mission-collection-item(data-fancybox data-src="#exchangeList")
+                            .mci-img 
+                                img(src="" alt="")
+                            .mci-status
+                                .ic-fresh
+                            span.mci-name= '少年' + i
+                    - }
+                - }
+            .px-sm.pb-sm
+                .hint(data-type="danger") 注意：兌換成功後，你的收藏品將被刪除，一但刪除後，將無法復原，請小心操作。
+            .checkbox
+                input#agreement(type="checkbox" v-model="agree")
+                label(for="agreement") 我已閱讀且同意活動說明和注意事項
+            .po-f.bottom.block.w-100.fixed-btn-wrap
+                .bg-white.px-xl.pb-xl.pt-md
+                    button.btn-primary.mt-none.mb-xxs.block(@click="exchange" :disabled="!agree") 
+                        .btn-loading#dot-loading(v-show="btnloading")
+                        span(v-show="!btnloading") 兌換獎勵
+                        // chrome 禁止直接讀取 local json，這邊要用 local server 才看的到
+
+    // 更換小卡
+    #exchangeList.dialog.notice-dialog.no-close(style="display: none;")
+        .dialog-content-wrap
+            .notice-dialog-title 變更收藏品
+            .dialog-scroll
+                - for (var i = 1; i < 11; ++i) {
+                    .change-card.mb-xs
+                        - if (i === 2) {
+                            input(type="radio" id= 'exchange'+i value= 'exchange'+i name="exchangeCard" v-model="changeCard")
+                        - } else {
+                            input(type="radio" id= 'exchange'+i value= 'exchange'+i name="exchangeCard" v-model="changeCard")
+                        -}
+                        label.d-flex.ai-center.p-xxs.pr-sm(for= 'exchange'+i)
+                            .img.round.mr-sm.bg-slightlygray(data-ratio="1" data-size="blackhole-list")
+                                img(src="./img/mission/mission-theme-1.png" alt="")
+                            span.Subhead2.grow-1 浦俊素浦俊素與浦俊素與
+                            .ic-checked
+                - }
+            button.dialog-button.text-primary(onclick="$.fancybox.close();") 確定變更
+
+    // 兌換成功
+    #exchangeSuccess.dialog.no-close(style="display: none;")
+        .dialog-content-wrap
+            img.po-a.top.success-bg-wrap.animated.slideInDown(src="./img/mission/spark-bg-s.svg" alt="取得獎品")
+            .Subhead2-M.py-md.t-c 恭喜你，兌換成功！
+            .mission-prize-img
+                img(src="./img/mission/mission-theme-1.png" alt="")
+            p.t-c.Body4.mb-xl 原子少年人形公仔限量版一隻 20 字示意
+            button.btn-primary.mb-none.block(onclick="window.location = './mission.html'") 回到任務頁
+
+block js 
+    script.
+        // 點點點圖片的使用方法
+        var jQfn = function (){
+            var animation = bodymovin.loadAnimation({
+                container: document.getElementById('dot-loading'),
+                // chrome 禁止直接讀取 local json，這邊要用 local server 才看的到
+                path: './js/json/dot-loading-white.json',
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                name: "Demo Animation",
+            });
+        }
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    btnloading: false,
+                    agree: false,
+                    changeCard: 'exchange1',
+                }
+            },
+            mounted: function () {
+                this.$nextTick(function () {
+                    //- vm.prizeLoading = false
+                    //- window.setTimeout(function(){
+                    //-     vm.loading = false
+                    //- }, vm.loadingTimer);
+                    jQfn()
+                })
+            },
+            methods: {
+                exchange: function() {
+                    this.btnloading = true;
+                    window.setTimeout(function(){
+                        $.fancybox.open( $('#exchangeSuccess'), {
+                            touch: false
+                        });
+                        vm.btnloading = false;
+                    }, 3000);
+                }
+            }
+        })
